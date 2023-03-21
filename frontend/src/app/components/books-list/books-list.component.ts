@@ -11,18 +11,25 @@ import {Book} from '../../models/book';
 })
 export class BooksListComponent implements OnInit {
 
+  page: number = 1;
+  tablesSize: number = 21;
   books$!: Observable<Page<Book>>;
-  pageRequest: PageRequest = { pageIndex: 0, pageSize: 30};
+  pageRequest: PageRequest = { pageIndex: this.page - 1, pageSize: this.tablesSize};
 
   constructor(
     private bookService: BookService,
   ) {
   }
 
-  ngOnInit(): void {
-    // TODO this observable should emit books taking into consideration pagination, sorting and filtering options.
-    this.books$ = this.bookService.getBooks({});
 
+  ngOnInit(): void {
+    this.loadBooks();
+
+  }
+
+  loadBooks(): void {
+    console.log("THIIIISSS", this.pageRequest)
+    this.books$ = this.bookService.getBooks(this.pageRequest);
     this.books$.subscribe({
       next: (books: Page<Book>) => {
         console.log("BOOOKS:", books);
@@ -31,7 +38,24 @@ export class BooksListComponent implements OnInit {
         console.error(error)
       }
     });
-   }
+  }
+
+
+  onTableDataChange(event:any) {
+    //console.log("eventtt", event.target.value);
+   // this.tablesSize = event;
+    console.log("ENNE", this.page);
+    console.log(event)
+
+    this.page = event;
+    this.pageRequest.pageIndex = this.page;
+    console.log("Prst", this.page)
+    this.loadBooks();
+  }
+
+
+
+
 
   onSort(sort: string) {
     this.pageRequest.sort = sort;
@@ -39,10 +63,7 @@ export class BooksListComponent implements OnInit {
     this.refreshBooks();
   }
 
-  onPageChange(pageIndex: number) {
-    this.pageRequest.pageIndex = pageIndex;
-    this.refreshBooks();
-  }
+
 
   private refreshBooks() {
     this.books$ = this.bookService.getBooks(this.pageRequest);

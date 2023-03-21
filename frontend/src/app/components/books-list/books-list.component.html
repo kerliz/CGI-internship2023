@@ -9,6 +9,7 @@
               <table class="table table-dark table-sm">
                 <thead>
                 <tr>
+                  <th scope="col">ID</th>
                   <th scope="col">Title</th>
                   <th scope="col">Author</th>
                   <th scope="col">Genre</th>
@@ -18,7 +19,8 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let book of books.content" [routerLink]="['/books', book.id]">
-                  <th scope="row">{{book.title}}</th>
+                  <th scope="row">{{book.id}}</th>
+                  <th >{{book.title}}</th>
                   <td>{{book.author}}</td>
                   <td>{{book.genre}}</td>
                   <td>{{book.year}}</td>
@@ -32,33 +34,74 @@
               </table>
             </div>
           </div>
-          <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-end">
-              <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
+
+          <div  >
+            <a class="list-group-item list-group-item-action" *ngFor="let item of [].constructor(books.totalPages) | paginate: {
+            itemsPerPage: tablesSize,
+            currentPage: page,
+            totalItems: books.totalElements - tablesSize}; let i = index ">
+            </a></div>
+          <div>
+            <pagination-controls class="myPagination"
+                                 previousLabel="Previous"
+                                 nextLabel="Next"
+                                 (pageChange)="onTableDataChange($event)" >
+
+            </pagination-controls>
+          </div>
+
+
+          <!--
+          <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-end" >
+
+              <li class="page-item"  [ngClass]="1 == (currentPage$ | async) ? ' disabled' : ''"   >
+                <a (click)="goToNextOrPreviousPage('previous')"  class="page-link" aria-label="Previous">
                   <span aria-hidden="true">&laquo; Previous</span>
                 </a>
               </li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
+              <li *ngFor="let item of [].constructor(books.totalPages) | paginate: {itemsPerPage: 15, currentPage: p}  ; let i = index"    class="page-item">
+                <a (click)="goToPage(i + 1)" class="page-link" >{{i + 1}}</a>
+              </li>
+              <li class="page-item"  [ngClass]="books.totalPages  == (currentPage$ | async) ? ' disabled' : ''">
+                <a (click)="goToNextOrPreviousPage('next')" class="page-link"  aria-label="Next">
+                  <span aria-hidden="true">Next &raquo;</span>
+                </a>
+              </li>
+            </ul>
+
+
+
+          </nav>
+          -->
+
+<!--
+          <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-end">
+              <li class="page-item pointer" >
+                <a (click)="goToNextOrPreviousPage('previous')" class="page-link" aria-label="Previous">
+                  <span aria-hidden="true">&laquo; Previous</span>
+                </a>
+              </li>
+              <li *ngFor="let pageNumber of [].constructor(books.totalPages); let i = index;"
+                  class="page-item pointer" [ngClass]="i == (currentPage$ | async) ? ' active' : ''">
+                <a (click)="goToPage(i)" class="page-link">
+                  {{ i + 1 }}
+                </a>
+              </li>
+              <li class="page-item pointer" [ngClass]="(books.totalPages - 1) == (currentPage$ | async) ? ' disabled' : ''">
+                <a (click)="goToNextOrPreviousPage('next')" class="page-link" aria-label="Next">
                   <span aria-hidden="true">Next &raquo;</span>
                 </a>
               </li>
             </ul>
           </nav>
+          -->
+
         </div>
-
-
-
-
-
       </mat-nav-list>
     </mat-card-content>
   </mat-card>
 </div>
-
 
 
