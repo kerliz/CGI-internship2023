@@ -21,6 +21,7 @@ export class BookService {
   getBooks(filter: Partial<PageRequest>): Observable<Page<Book>> {
     const url = this.baseUrl + '/getBooks';
     const params = RestUtil.buildParamsFromPageRequest(filter);
+    console.log("PARAMS",params);
     return this.http.get<Page<Book>>(url, {params});
   }
 
