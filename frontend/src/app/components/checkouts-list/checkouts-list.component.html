@@ -7,21 +7,22 @@
           <table class="table table-striped table-dark table-sm">
             <thead>
             <tr>
-              <th scope="col">ID</th>
+
               <th scope="col">First Name</th>
               <th scope="col">Last Name</th>
               <th scope="col">Borrowed book</th>
               <th scope="col">Checked out</th>
-              <th scope="col">Status</th>
+              <th scope="col">Due date</th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let checkout of checkouts.content">
-              <td scope="row">{{checkout.id}}</td>
-              <th >{{checkout.borrowerFirstName}}</th>
+
+              <td >{{checkout.borrowerFirstName}}</td>
               <td>{{checkout.borrowerLastName}}</td>
-              <td  [routerLink]="['/books', checkout.borrowedBook.id]" >{{checkout.borrowedBook.title}}</td>
+              <th  [routerLink]="['/books', checkout.borrowedBook.id]" >{{checkout.borrowedBook.title}}</th>
               <td>{{checkout.checkedOutDate}}</td>
+              <td>{{checkout.dueDate}}</td>
 
             </tr>
             </tbody>

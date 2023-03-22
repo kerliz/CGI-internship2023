@@ -46,7 +46,12 @@
       <h3 class="mb-0">
         <a>{{ (book$ | async)?.dueDate}}</a>
       </h3>
-
+    </div>
+    <div class="col otherBoxes" *ngIf="(book$ | async)?.status === 'AVAILABLE'">
+      <strong class="d-inline-block mb-2 text-primary">Checkout</strong>
+      <h3 class="mb-0">
+        <a>BORROW</a>
+      </h3>
     </div>
 
   </div>
