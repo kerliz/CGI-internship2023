@@ -14,10 +14,20 @@
           </li>
 
         </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search books" aria-label="Search">
+
+        <form class="d-flex" role="search" (ngSubmit)="onSearch()"  >
+          <input type="text" name="search" ngModel class="form-control me-2" type="search" placeholder="Search books" aria-label="Search"
+                 [(ngModel)]="searchText" autocomplete="off"
+          >
           <button class="btn btn-success" type="submit">Search</button>
         </form>
+
+        <!--
+        <form class="d-flex" role="search"  #searchForm="ngForm" (ngSubmit)="searchBooks(searchForm.form.value)" >
+          <input type="text" name="name" ngModel class="form-control me-2" type="search" placeholder="Search books" aria-label="Search">
+          <button class="btn btn-success" type="submit">Search</button>
+        </form>
+        -->
       </div>
     </div>
   </nav>

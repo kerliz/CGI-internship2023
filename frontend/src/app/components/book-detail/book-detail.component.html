@@ -1,1 +1,53 @@
+<section class="jumbotron text-center">
+  <div class="container d-flex align-items-center justify-content-center">
+    <div>
+      <h1>{{ (book$ | async)?.title}}</h1>
+    </div>
+  </div>
+</section>
+
+
+<div class="container authorBox">
+  <div class="row row-cols-4">
+    <div class="col ">
+      <div class="card-body d-flex flex-column align-items-start">
+        <strong class="d-inline-block mb-2 text-primary">Author</strong>
+        <h3 class="mb-0">
+          <a class="text-dark">{{ (book$ | async)?.author}}</a>
+        </h3>
+        <div class="d-inline-block mb-2 text-primary">Year</div>
+        <p class="card-text mb-auto">{{ (book$ | async)?.year}}</p>
+      </div>
+    </div>
+
+    <div class="col col-border otherBoxes">
+      <strong class="d-inline-block mb-2 text-primary">Added</strong>
+      <h3 class="mb-0">
+        <a>{{ (book$ | async)?.added}}</a>
+      </h3>
+    </div>
+
+    <div class="col otherBoxes">
+      <strong class="d-inline-block mb-2 text-primary">Status</strong>
+      <h3 class="mb-0">
+        <span class="badge"
+              [ngClass]="[(book$ | async)?.status === 'AVAILABLE' ? 'bg-success' : '', (book$ | async)?.status === 'BORROWED' ? 'bg-primary' : '', (book$ | async)?.status === 'RETURNED' ? 'bg-info' : '', (book$ | async)?.status === 'DAMAGED' ? 'bg-danger' : '']">
+    {{ (book$ | async)?.status }}
+</span>
+      </h3>
+    </div>
+
+    <div class="col otherBoxes" *ngIf="(book$ | async)?.status === 'BORROWED'">
+      <strong class="d-inline-block mb-2 text-primary">Due date</strong>
+      <h3 class="mb-0">
+        <a>{{ (book$ | async)?.dueDate}}</a>
+      </h3>
+
+    </div>
+
+  </div>
+</div>
+
+
+
 <pre>{{book$ | async | json}}</pre>

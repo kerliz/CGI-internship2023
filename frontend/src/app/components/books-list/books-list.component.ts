@@ -3,6 +3,7 @@ import {BookService} from '../../services/book.service';
 import {Observable} from 'rxjs';
 import {Page, PageRequest} from '../../models/page';
 import {Book} from '../../models/book';
+import {SearchTextService} from "../../services/search-text.service";
 
 @Component({
   selector: 'app-books-list',
@@ -11,10 +12,13 @@ import {Book} from '../../models/book';
 })
 export class BooksListComponent implements OnInit {
 
-  page: number = 1;
+  page: number = 0;
   tablesSize: number = 21;
   books$!: Observable<Page<Book>>;
-  pageRequest: PageRequest = { pageIndex: this.page - 1, pageSize: this.tablesSize};
+  pageRequest: PageRequest = { pageIndex: this.page, pageSize: this.tablesSize};
+
+
+
 
   constructor(
     private bookService: BookService,
@@ -28,7 +32,6 @@ export class BooksListComponent implements OnInit {
   }
 
   loadBooks(): void {
-    console.log("THIIIISSS", this.pageRequest)
     this.books$ = this.bookService.getBooks(this.pageRequest);
     this.books$.subscribe({
       next: (books: Page<Book>) => {
@@ -42,14 +45,9 @@ export class BooksListComponent implements OnInit {
 
 
   onTableDataChange(event:any) {
-    //console.log("eventtt", event.target.value);
-   // this.tablesSize = event;
-    console.log("ENNE", this.page);
-    console.log(event)
-
+    console.log(event - 1)
     this.page = event;
-    this.pageRequest.pageIndex = this.page;
-    console.log("Prst", this.page)
+    this.pageRequest.pageIndex = this.page - 1;
     this.loadBooks();
   }
 
