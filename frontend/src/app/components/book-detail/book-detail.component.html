@@ -3,7 +3,11 @@
     <div>
       <h1>{{ (book$ | async)?.title}}</h1>
     </div>
+
   </div>
+  <div>
+  {{ (book$ | async)?.genre}}
+</div>
 </section>
 
 

@@ -3,7 +3,6 @@ import {BookService} from '../../services/book.service';
 import {Observable} from 'rxjs';
 import {Page, PageRequest} from '../../models/page';
 import {Book} from '../../models/book';
-import {SearchTextService} from "../../services/search-text.service";
 
 @Component({
   selector: 'app-books-list',
