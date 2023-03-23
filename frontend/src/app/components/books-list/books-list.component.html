@@ -2,7 +2,12 @@
   <mat-card>
     <mat-card-title>Books</mat-card-title>
     <mat-card-content>
+
       <mat-nav-list *ngIf="(books$ | async) as books">
+        <select [(ngModel)]="selected  " (click)="getAvailableBooks()">
+        <option  [ngValue]="null">Please select</option>
+        <option *ngFor="let cond of sorted" [ngValue]="cond[0]">{{cond[1]}}</option>
+        </select>
         <div class="container">
           <div class="row">
             <div class="col-md-12 mt-3">

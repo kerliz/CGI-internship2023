@@ -1,6 +1,7 @@
 package com.cgi.library.controller;
 
 import com.cgi.library.model.BookDTO;
+import com.cgi.library.model.BookStatus;
 import com.cgi.library.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +23,13 @@ public class BookController {
 
         return ResponseEntity.ok(bookService.getBooks(pageable));
     }
+
+
+    @GetMapping(value = "getBooksByStatus")
+    public ResponseEntity<Page<BookDTO>> getAvailableBooks(@RequestParam("status") BookStatus value, Pageable pageable) {
+        return ResponseEntity.ok(bookService.getBooksByStatus(value, pageable));
+    }
+
 
     @GetMapping(value = "getBook")
     public ResponseEntity<BookDTO> getBook(@RequestParam(value = "bookId") UUID bookId) {

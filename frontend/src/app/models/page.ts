@@ -14,8 +14,10 @@ export interface Page<T> {
  * Object for creating page request to spring pageable endpoints.
  */
 export interface PageRequest {
+
   pageIndex: number;
   pageSize: number;
   sort?: string;
+  status?: string;
   direction?: SortDirection;
 }
