@@ -41,7 +41,7 @@
       </h3>
     </div>
 
-    <div class="col otherBoxes" *ngIf="(book$ | async)?.status === 'BORROWED'">
+    <div class="col otherBoxes" *ngIf="isBorrowed">
       <strong class="d-inline-block mb-2 text-primary">Due date</strong>
       <h3 class="mb-0">
         <a>{{ (book$ | async)?.dueDate}}</a>
@@ -49,15 +49,38 @@
       </h3>
       <span  *ngIf="isOverdue"  class="d-inline-block mb-2 text-danger">OVERDUE</span>
     </div>
-    <div class="col otherBoxes" *ngIf="(book$ | async)?.status === 'AVAILABLE'">
+    <div class="col otherBoxes" *ngIf="!isBorrowed">
       <strong class="d-inline-block mb-2 text-primary">Checkout</strong>
+
+
+      <!-- Button trigger modal -->
+
+
       <h3 class="mb-0">
-
-        <button (click)="checkOut()" >
-          <a>BORROW</a>
-
+        <button (click)="checkOut()"  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          BORROW
         </button>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-body">
+                Book borrowed until {{getDueDate()}}
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
       </h3>
+
+
+
     </div>
 
   </div>

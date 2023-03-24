@@ -21,6 +21,8 @@ export class BookDetailComponent implements OnInit {
   isOverdue: boolean;
  // currentDate: string;
   newStatus: string;
+  isBorrowed: boolean;
+
 
 
 
@@ -43,12 +45,15 @@ export class BookDetailComponent implements OnInit {
   bookInfo() {
     this.book$.subscribe(book => {
       if (book.status === 'BORROWED') {
+        this.isBorrowed = true;
         this.getCurrentDate()
         if (this.getCurrentDate() > book.dueDate) {
           this.isOverdue = true;
         } else {
           this.isOverdue = false;
         }
+      } else {
+        this.isBorrowed = false;
       }
     });
   }
@@ -68,6 +73,7 @@ export class BookDetailComponent implements OnInit {
     this.book$.subscribe(book => {
       if (book.status === 'AVAILABLE') {
         this.newStatus = 'BORROWED'
+        this.isBorrowed = true
         const checkout: Checkout = {
           id: uuidv4(),
           borrowerFirstName: 'John',
@@ -83,6 +89,7 @@ export class BookDetailComponent implements OnInit {
         });
       } else if (book.status === 'BORROWED') {
         this.newStatus = 'AVAILABLE'
+        this.isBorrowed= false
       }
       console.log(book.id)
       this.bookService.updateStatus(book.id, this.newStatus, this.getDueDate()).subscribe(updatedBook => {
