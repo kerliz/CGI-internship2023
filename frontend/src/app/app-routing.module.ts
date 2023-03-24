@@ -11,7 +11,9 @@ const routes: Routes = [
   {path: 'books/:id', component: BookDetailComponent},
   {path: 'checkouts', component: CheckoutsListComponent},
   {path: 'books/status/:status', component: BooksListComponent},
-  {path: 'favourites', component: FavouriteBooksListComponent}
+  {path: 'favourites', component: FavouriteBooksListComponent},
+  {path: 'addCheckout', component: BookDetailComponent}
+
 ];
 
 @NgModule({

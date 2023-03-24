@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Page, PageRequest } from '../models/page';
-import { Book } from '../models/book';
-import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { RestUtil } from './rest-util';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {Page, PageRequest} from '../models/page';
+import {Book} from '../models/book';
+import {Observable} from 'rxjs';
+import {environment} from 'src/environments/environment';
+import {RestUtil} from './rest-util';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +25,7 @@ export class BookService {
   }
 
   getBooksStatus(filter: Partial<PageRequest>): Observable<Page<Book>> {
-    const url = this.baseUrl+ '/getBooksByStatus';
+    const url = this.baseUrl + '/getBooksByStatus';
     //const params = RestUtil.buildParamsFromPageRequest(filter);
     const params = {
       page: filter.pageIndex.toString(),
@@ -37,16 +37,17 @@ export class BookService {
   }
 
 
-
   getBook(bookId: string): Observable<Book> {
     const url = this.baseUrl + '/getBook';
     const params = new HttpParams().set('bookId', bookId);
     return this.http.get<Book>(url, {params});
   }
-
-
-
-
+  updateStatus(bookId: string, newStatus: string): Observable<Book> {
+    const url = this.baseUrl + '/updateBookStatus';
+    const params = new HttpParams().set('bookId', bookId).set('status', newStatus);
+    console.log("BODY HA URL", params);
+    return this.http.post<Book>(url, params );
+  }
 
 
   saveBook(book: Book): Observable<void> {

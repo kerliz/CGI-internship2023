@@ -36,6 +36,14 @@ public class BookController {
         return ResponseEntity.ok(bookService.getBook(bookId));
     }
 
+    @PostMapping(value = "updateBookStatus")
+    public ResponseEntity<BookDTO>  updateBookStatus(@RequestParam(value = "bookId") UUID bookId, @RequestParam(value = "status") String status) {
+        return ResponseEntity.ok(bookService.updateBookStatus(bookId, status));
+    }
+
+
+
+
     @PostMapping(value = "saveBook")
     public ResponseEntity<String> saveBook(@RequestBody BookDTO book) {
         return ResponseEntity.ok(String.valueOf(bookService.saveBook(book)));
