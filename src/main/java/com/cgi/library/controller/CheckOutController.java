@@ -28,10 +28,12 @@ public class CheckOutController {
     }
 
     @PostMapping(value = "checkout")
-    public ResponseEntity<String> saveCheckOut(@RequestBody CheckOutDTO checkOutDTO) {
-        checkOutService.saveCheckOut(checkOutDTO);
-        return ResponseEntity.ok("");
+    public ResponseEntity<CheckOutDTO> saveCheckOut(@RequestBody CheckOutDTO checkOutDTO) {
+        CheckOutDTO savedCheckOut = checkOutService.saveCheckOut(checkOutDTO);
+        System.out.println(savedCheckOut);
+        return ResponseEntity.ok(savedCheckOut);
     }
+
 
     @DeleteMapping(value = "checkout")
     public ResponseEntity<String> deleteCheckOut(@RequestParam(value = "checkOutId") UUID checkOutId) {

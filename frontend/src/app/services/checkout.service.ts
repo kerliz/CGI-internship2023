@@ -25,6 +25,18 @@ export class CheckoutService {
   }
 
 
+  //(id, borrower_first_name, borrower_last_name, book_id, checked_out_date, due_date)
+  addToCheckout(book: Checkout): Observable<Checkout> {
+    const url = this.baseUrl + '/checkout';
+    return this.http.post<Checkout>(url, book);
+  }
+
+/*
+  saveBook(book: Book): Observable<void> {
+    const url = this.baseUrl + '/saveBook';
+    return this.http.post<void>(url, book);
+  }
+ */
 
 
 }
