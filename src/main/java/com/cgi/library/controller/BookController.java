@@ -37,8 +37,8 @@ public class BookController {
     }
 
     @PostMapping(value = "updateBookStatus")
-    public ResponseEntity<BookDTO>  updateBookStatus(@RequestParam(value = "bookId") UUID bookId, @RequestParam(value = "status") String status) {
-        return ResponseEntity.ok(bookService.updateBookStatus(bookId, status));
+    public ResponseEntity<BookDTO>  updateBookStatus(@RequestParam(value = "bookId") UUID bookId, @RequestParam(value = "status") String status, @RequestParam(value = "dueDate") String dueDate) {
+        return ResponseEntity.ok(bookService.updateBookStatus(bookId, status, dueDate));
     }
 
 

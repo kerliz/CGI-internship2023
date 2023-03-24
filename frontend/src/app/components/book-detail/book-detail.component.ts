@@ -85,7 +85,7 @@ export class BookDetailComponent implements OnInit {
         this.newStatus = 'AVAILABLE'
       }
       console.log(book.id)
-      this.bookService.updateStatus(book.id, this.newStatus).subscribe(updatedBook => {
+      this.bookService.updateStatus(book.id, this.newStatus, this.getDueDate()).subscribe(updatedBook => {
         console.log(updatedBook); // Log the updated book to the console
       });
     })

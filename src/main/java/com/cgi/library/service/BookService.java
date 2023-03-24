@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Service
@@ -31,9 +32,10 @@ public class BookService {
     }
 
 
-    public BookDTO updateBookStatus(UUID bookId, String status) {
+    public BookDTO updateBookStatus(UUID bookId, String status, String dueDate) {
         Book book = bookRepository.getOne(bookId);
         book.setStatus(BookStatus.valueOf(status)); // set the new status value
+        book.setDueDate(LocalDate.parse(dueDate));
         bookRepository.save(book); // save the updated book entity to the database
         return ModelMapperFactory.getMapper().map(book, BookDTO.class); // map the updated entity to a DTO and return it
 
