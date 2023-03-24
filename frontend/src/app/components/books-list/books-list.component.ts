@@ -45,10 +45,10 @@ export class BooksListComponent implements OnInit {
         this.selectedStatus = status as BookStatus;
         this.loadStatus();
       } else {
-        // If no status option has been selected, just load all the books
         this.loadBooks();
       }
     });
+
   }
 
   loadStatus() {
@@ -61,8 +61,6 @@ export class BooksListComponent implements OnInit {
   loadBooks(): void {
 
     this.books$ = this.bookService.getBooks(this.pageRequest);
-    console.log(this.books$)
-
   }
 
 
@@ -84,15 +82,11 @@ export class BooksListComponent implements OnInit {
   addToFavorites(book: Book): void {
     let favoriteBooks = JSON.parse(localStorage.getItem('favoriteBooks')) || [];
     const bookIndex = favoriteBooks.findIndex((b: Book) => b.id === book.id);
-    console.log(favoriteBooks)
     if (bookIndex >= 0) {
-      // The book is already in favorites, so remove it
       favoriteBooks.splice(bookIndex, 1);
     } else {
-      // The book is not in favorites, so add it
       favoriteBooks.push(book);
     }
-
     localStorage.setItem('favoriteBooks', JSON.stringify(favoriteBooks));
   }
 

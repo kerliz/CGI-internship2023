@@ -11,11 +11,13 @@ import {Book} from "../../models/book";
 export class FavouriteBooksListComponent implements OnInit {
 
   items: any[];
+  disableLink = false;
+
   ngOnInit(): void {
 
     this.items = JSON.parse(localStorage.getItem('favoriteBooks'))
     console.log(this.items)
-
+this.disableLink = false;
   }
 
   addToFavorites(book: Book): void {
@@ -31,6 +33,7 @@ export class FavouriteBooksListComponent implements OnInit {
     }
 
     localStorage.setItem('favoriteBooks', JSON.stringify(favoriteBooks));
+   this.disableLink = true
   }
 
   isFavorite(book: Book): boolean {

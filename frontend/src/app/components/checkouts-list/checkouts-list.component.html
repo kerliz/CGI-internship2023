@@ -28,8 +28,19 @@
             </tbody>
           </table>
         </div>
-
-
+        <div>
+          <a class="list-group-item list-group-item-action" *ngFor="let _ of [].constructor(checkouts.totalPages)   | paginate: {
+            itemsPerPage: tablesSize,
+            currentPage: page,
+            totalItems: checkouts.totalElements}; let i = index ">
+          </a></div>
+        <div>
+          <pagination-controls class="myPagination"
+                               previousLabel="Previous"
+                               nextLabel="Next"
+                               (pageChange)="onTableDataChange($event)">
+          </pagination-controls>
+        </div>
       </mat-nav-list>
     </mat-card-content>
   </mat-card>

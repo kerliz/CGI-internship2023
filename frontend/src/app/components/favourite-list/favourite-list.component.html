@@ -1,4 +1,3 @@
-
 <mat-nav-list>
 
   <div class="container">
@@ -17,10 +16,10 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let book of items" [routerLink]="['/books', book.id]">
+          <tr *ngFor="let book of items">
 
-          <td >{{book.id}}</td>
-            <th>{{book.title}}</th>
+            <td>{{book.id}}</td>
+            <th [routerLink]="['/books', book.id]">{{book.title}}</th>
             <td>{{book.author}}</td>
             <td>{{book.genre}}</td>
             <td>{{book.year}}</td>
@@ -39,47 +38,9 @@
 
             </td>
           </tr>
-
-
-          <!--
-                          <tr *ngFor="let book of books.content" [routerLink]="['/books', book.id]">
-                            <td scope="row">{{book.id}}</td>
-                            <th >{{book.title}}</th>
-                            <td>{{book.author}}</td>
-                            <td>{{book.genre}}</td>
-                            <td>{{book.year}}</td>
-
-                            <td>
-                            <span class="badge" [ngClass]="[book.status === 'AVAILABLE' ? ' bg-success' : '', book.status === 'BORROWED' ? ' bg-primary' : '', book.status === 'RETURNED' ? ' bg-info' : '', book.status === 'DAMAGED' ? ' bg-danger' : '']">
-                                {{ book.status }}
-                              </span>
-                            </td>
-
-
-                            <td ><button mat-icon-button (click)="addToFavorites()">
-                              <mat-icon>star</mat-icon>
-                            </button></td>
-                          </tr>
-                          -->
           </tbody>
         </table>
       </div>
     </div>
-<!--
-    <div>
-      <a class="list-group-item list-group-item-action" *ngFor="let _ of [].constructor(books.totalPages)   | paginate: {
-            itemsPerPage: tablesSize,
-            currentPage: page,
-            totalItems: books.totalElements}; let i = index ">
-      </a></div>
-    <div>
-      <pagination-controls class="myPagination"
-                           previousLabel="Previous"
-                           nextLabel="Next"
-                           (pageChange)="onTableDataChange($event)">
-      </pagination-controls>
-    </div>
-
-    --->
   </div>
 </mat-nav-list>

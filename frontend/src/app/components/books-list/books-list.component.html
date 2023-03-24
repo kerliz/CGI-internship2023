@@ -30,9 +30,9 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let book of books.content" [routerLink]="['/books', book.id]">
+                <tr *ngFor="let book of books.content">
                   <td >{{book.id}}</td>
-                  <th>{{book.title}}</th>
+                  <th  [routerLink]="['/books', book.id]" >{{book.title}}</th>
                   <td>{{book.author}}</td>
                   <td>{{book.genre}}</td>
                   <td>{{book.year}}</td>
@@ -49,27 +49,6 @@
 
                   </td>
                 </tr>
-
-                <!--
-                                <tr *ngFor="let book of books.content" [routerLink]="['/books', book.id]">
-                                  <td scope="row">{{book.id}}</td>
-                                  <th >{{book.title}}</th>
-                                  <td>{{book.author}}</td>
-                                  <td>{{book.genre}}</td>
-                                  <td>{{book.year}}</td>
-
-                                  <td>
-                                  <span class="badge" [ngClass]="[book.status === 'AVAILABLE' ? ' bg-success' : '', book.status === 'BORROWED' ? ' bg-primary' : '', book.status === 'RETURNED' ? ' bg-info' : '', book.status === 'DAMAGED' ? ' bg-danger' : '']">
-                                      {{ book.status }}
-                                    </span>
-                                  </td>
-
-
-                                  <td ><button mat-icon-button (click)="addToFavorites()">
-                                    <mat-icon>star</mat-icon>
-                                  </button></td>
-                                </tr>
-                                -->
                 </tbody>
               </table>
             </div>
