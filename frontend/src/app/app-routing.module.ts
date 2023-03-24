@@ -3,14 +3,15 @@ import { Routes, RouterModule } from '@angular/router';
 import { BooksListComponent } from './components/books-list/books-list.component';
 import { BookDetailComponent } from './components/book-detail/book-detail.component';
 import {CheckoutsListComponent} from "./components/checkouts-list/checkouts-list.component";
-//import {StatusListComponent} from "./components/status-list/status-list.component";
+import {FavouriteBooksListComponent} from "./components/favourite-list/favourite-list.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'books', pathMatch: 'full'},
   {path: 'books', component: BooksListComponent},
   {path: 'books/:id', component: BookDetailComponent},
   {path: 'checkouts', component: CheckoutsListComponent},
-  {path: 'books/status/:status', component: BooksListComponent}
+  {path: 'books/status/:status', component: BooksListComponent},
+  {path: 'favourites', component: FavouriteBooksListComponent}
 ];
 
 @NgModule({

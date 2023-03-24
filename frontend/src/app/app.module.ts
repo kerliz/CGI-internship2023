@@ -13,8 +13,7 @@ import { BookDetailComponent } from './components/book-detail/book-detail.compon
 import { HttpClientModule } from '@angular/common/http';
 import {FormsModule} from "@angular/forms";
 import {CheckoutsListComponent} from "./components/checkouts-list/checkouts-list.component";
-//import {StatusListComponent} from "./components/status-list/status-list.component";
-//import {SortingListComponent} from "./components/sorting-list/sorting-list.component";
+import {FavouriteBooksListComponent} from "./components/favourite-list/favourite-list.component";
 
 @NgModule({
   declarations: [
@@ -22,8 +21,8 @@ import {CheckoutsListComponent} from "./components/checkouts-list/checkouts-list
     BooksListComponent,
     BookDetailComponent,
     CheckoutsListComponent,
-    //StatusListComponent,
-   // SortingListComponent
+    FavouriteBooksListComponent
+
   ],
   imports: [
     NgxPaginationModule,

@@ -1,4 +1,4 @@
-import {Component, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BookService} from '../../services/book.service';
 import {Observable} from 'rxjs';
 import {Page, PageRequest} from '../../models/page';
@@ -17,47 +17,27 @@ export class BooksListComponent implements OnInit {
   tablesSize: number = 22;
   value: string = '';
   books$!: Observable<Page<Book>>;
-  pageRequest: PageRequest = { pageIndex: this.page, pageSize: this.tablesSize, status: this.value};
+  pageRequest: PageRequest = {pageIndex: this.page, pageSize: this.tablesSize, status: this.value};
 
   selectedStatus: BookStatus;
 
 
   statusOptions = [
-    { value: "AVAILABLE", label: 'Available' },
-    { value: "BORROWED", label: 'Borrowed' },
-    { value: "RETURNED", label: 'Returned' },
-    { value: "DAMAGED", label: 'Damaged' },
-    { value: "PROCESSING", label: 'Processing' }
+    {value: "AVAILABLE", label: 'Available'},
+    {value: "BORROWED", label: 'Borrowed'},
+    {value: "RETURNED", label: 'Returned'},
+    {value: "DAMAGED", label: 'Damaged'},
+    {value: "PROCESSING", label: 'Processing'}
   ]
-
-
-  totalItemCount: number;
-
-
 
   constructor(
     private route: ActivatedRoute,
-
     private bookService: BookService,
   ) {
-  }
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes[this.selectedStatus]) {
-      this.pageRequest.status = this.selectedStatus;
-      this.bookService.getBooksStatus(this.pageRequest).subscribe(
-        (bookPage: Page<Book>) => {
-          console.log(bookPage);
-        },
-        (error: any) => {
-          console.error(error);
-        }
-      );
-    }
   }
 
 
   ngOnInit(): void {
-    // Check if a status option has been selected
     this.route.params.subscribe(params => {
       const status = params['status'];
       console.log("GET STATUS", status)
@@ -86,7 +66,6 @@ export class BooksListComponent implements OnInit {
   }
 
 
-
   onTableDataChange(event: any) {
     this.page = event;
     this.pageRequest.pageIndex = this.page - 1;
@@ -102,17 +81,25 @@ export class BooksListComponent implements OnInit {
   }
 
 
+  addToFavorites(book: Book): void {
+    let favoriteBooks = JSON.parse(localStorage.getItem('favoriteBooks')) || [];
+    const bookIndex = favoriteBooks.findIndex((b: Book) => b.id === book.id);
+    console.log(favoriteBooks)
+    if (bookIndex >= 0) {
+      // The book is already in favorites, so remove it
+      favoriteBooks.splice(bookIndex, 1);
+    } else {
+      // The book is not in favorites, so add it
+      favoriteBooks.push(book);
+    }
 
-  onSort(sort: string) {
-    this.pageRequest.sort = sort;
-   // this.pageRequest.direction = this.pageRequest.direction === 'asc' ? 'desc' : 'asc';
-    this.refreshBooks();
+    localStorage.setItem('favoriteBooks', JSON.stringify(favoriteBooks));
   }
 
-
-
-  private refreshBooks() {
-    this.books$ = this.bookService.getBooks(this.pageRequest);
+  isFavorite(book: Book): boolean {
+    const favoriteBooks = JSON.parse(localStorage.getItem('favoriteBooks')) || [];
+    return favoriteBooks.some((b: Book) => b.id === book.id);
   }
+
 
 }
