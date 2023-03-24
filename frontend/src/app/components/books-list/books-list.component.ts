@@ -40,7 +40,6 @@ export class BooksListComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const status = params['status'];
-      console.log("GET STATUS", status)
       if (status) {
         this.selectedStatus = status as BookStatus;
         this.loadStatus();
