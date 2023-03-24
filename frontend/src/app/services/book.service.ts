@@ -24,11 +24,15 @@ export class BookService {
     return this.http.get<Page<Book>>(url, {params});
   }
 
-  getAvailable(filter: Partial<PageRequest>): Observable<Page<Book>> {
+  getBooksStatus(filter: Partial<PageRequest>): Observable<Page<Book>> {
     const url = this.baseUrl+ '/getBooksByStatus';
-    const params = RestUtil.buildParamsFromPageRequest(filter);
-
-    console.log(params)
+    //const params = RestUtil.buildParamsFromPageRequest(filter);
+    const params = {
+      page: filter.pageIndex.toString(),
+      size: filter.pageSize.toString(),
+      status: filter.status
+    };
+    console.log("PAPAPP", params)
     return this.http.get<Page<Book>>(url, {params});
   }
 

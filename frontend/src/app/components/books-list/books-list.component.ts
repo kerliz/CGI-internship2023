@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, SimpleChanges} from '@angular/core';
 import {BookService} from '../../services/book.service';
 import {Observable} from 'rxjs';
 import {Page, PageRequest} from '../../models/page';
 import {Book} from '../../models/book';
 import {BookStatus} from "../../models/book-status";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-books-list',
@@ -17,10 +18,17 @@ export class BooksListComponent implements OnInit {
   value: string = '';
   books$!: Observable<Page<Book>>;
   pageRequest: PageRequest = { pageIndex: this.page, pageSize: this.tablesSize, status: this.value};
-  selected: any= null;
-  sorted: any
+
+  selectedStatus: BookStatus;
 
 
+  statusOptions = [
+    { value: "AVAILABLE", label: 'Available' },
+    { value: "BORROWED", label: 'Borrowed' },
+    { value: "RETURNED", label: 'Returned' },
+    { value: "DAMAGED", label: 'Damaged' },
+    { value: "PROCESSING", label: 'Processing' }
+  ]
 
 
   totalItemCount: number;
@@ -28,66 +36,70 @@ export class BooksListComponent implements OnInit {
 
 
   constructor(
+    private route: ActivatedRoute,
+
     private bookService: BookService,
   ) {
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes[this.selectedStatus]) {
+      this.pageRequest.status = this.selectedStatus;
+      this.bookService.getBooksStatus(this.pageRequest).subscribe(
+        (bookPage: Page<Book>) => {
+          console.log(bookPage);
+        },
+        (error: any) => {
+          console.error(error);
+        }
+      );
+    }
   }
 
 
   ngOnInit(): void {
-    this.loadBooks();
-
+    // Check if a status option has been selected
+    this.route.params.subscribe(params => {
+      const status = params['status'];
+      console.log("GET STATUS", status)
+      if (status) {
+        this.selectedStatus = status as BookStatus;
+        this.loadStatus();
+      } else {
+        // If no status option has been selected, just load all the books
+        this.loadBooks();
+      }
+    });
   }
+
+  loadStatus() {
+    this.value = this.selectedStatus;
+    this.pageRequest.status = this.value;
+    this.books$ = this.bookService.getBooksStatus(this.pageRequest)
+  }
+
 
   loadBooks(): void {
 
     this.books$ = this.bookService.getBooks(this.pageRequest);
     console.log(this.books$)
 
+  }
 
-    this.books$.subscribe({
-      next: (books: Page<Book>) => {
-        //this.pageRequest.pageIndex = books.totalElements
 
-        let temp = Array.from(books.content);
-        console.log("BOOOKS:", books);
-        for (let i = 0; i < temp.length; i ++) {
-          //this.sorted=temp.sort((a,b)=> {
-          //  console.log(temp[i].status)
-            //return a[books[i]] < b[1] ? -1 : a[1] > b[1] ? 1 : 0
-         // })
-        }
 
-        console.log(temp)
-      },
-      error: (error: any) => {
-        console.error(error)
+  onTableDataChange(event: any) {
+    this.page = event;
+    this.pageRequest.pageIndex = this.page - 1;
+    this.route.params.subscribe(params => {
+      const status = params['status'];
+      if (status) {
+        this.selectedStatus = status as BookStatus;
+        this.loadStatus();
+      } else {
+        this.loadBooks();
       }
     });
   }
-
-  getAvailableBooks() {
-    this.pageRequest.status = 'AVAILABLE'; // Set the status value to a valid enum value
-    this.bookService.getAvailable(this.pageRequest).subscribe(
-      (bookPage: Page<Book>) => {
-        console.log(bookPage);
-      },
-      (error: any) => {
-        console.error(error);
-      }
-    );
-  }
-
-
-
-
-  onTableDataChange(event:any) {
-    console.log(event - 1)
-    this.page = event;
-    this.pageRequest.pageIndex = this.page - 1;
-    this.loadBooks();
-  }
-
-
 
 
 

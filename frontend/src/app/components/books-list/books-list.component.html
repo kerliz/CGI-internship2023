@@ -1,13 +1,19 @@
+
+<mat-form-field appearance="fill">
+  <mat-label>Filter by status</mat-label>
+  <mat-select (selectionChange)="loadStatus()">
+    <mat-option *ngFor="let status of statusOptions" [value]="status.label" [routerLink]="['/books/status', status.label.toUpperCase()]">
+      {{status.label}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
 <div class="container mat-elevation-z4">
   <mat-card>
     <mat-card-title>Books</mat-card-title>
     <mat-card-content>
-
       <mat-nav-list *ngIf="(books$ | async) as books">
-        <select [(ngModel)]="selected  " (click)="getAvailableBooks()">
-        <option  [ngValue]="null">Please select</option>
-        <option *ngFor="let cond of sorted" [ngValue]="cond[0]">{{cond[1]}}</option>
-        </select>
+
         <div class="container">
           <div class="row">
             <div class="col-md-12 mt-3">
@@ -23,6 +29,7 @@
                 </tr>
                 </thead>
                 <tbody>
+
                 <tr *ngFor="let book of books.content" [routerLink]="['/books', book.id]">
                   <td scope="row">{{book.id}}</td>
                   <th >{{book.title}}</th>
