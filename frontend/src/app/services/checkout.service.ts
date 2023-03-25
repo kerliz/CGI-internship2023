@@ -38,6 +38,16 @@ export class CheckoutService {
     return this.http.post<Checkout>(url, book);
   }
 
+
+  deleteCheckout(checkoutId: string): Observable<Checkout> {
+    const url = this.baseUrl + '/checkout';
+    const params = new HttpParams().set('checkOutId', checkoutId);
+    console.log(params)
+    return this.http.delete<Checkout>(url, {params});
+  }
+
+
+
 /*
   saveBook(book: Book): Observable<void> {
     const url = this.baseUrl + '/saveBook';

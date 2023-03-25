@@ -26,8 +26,7 @@ export class BooksListComponent implements OnInit {
     {value: "AVAILABLE", label: 'Available'},
     {value: "BORROWED", label: 'Borrowed'},
     {value: "RETURNED", label: 'Returned'},
-    {value: "DAMAGED", label: 'Damaged'},
-    {value: "PROCESSING", label: 'Processing'}
+
   ]
 
   constructor(

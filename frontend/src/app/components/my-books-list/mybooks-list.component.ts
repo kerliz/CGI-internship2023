@@ -2,9 +2,8 @@ import {Component, OnInit} from "@angular/core";
 import {CheckoutService} from "../../services/checkout.service";
 import {Observable} from "rxjs";
 import {Page} from "../../models/page";
-import {Book} from "../../models/book";
 import {Checkout} from "../../models/checkout";
-import {BookStatus} from "../../models/book-status";
+import {BookService} from "../../services/book.service";
 
 @Component({
   selector: 'app-mybooks-list',
@@ -21,24 +20,29 @@ export class MyBooksListComponent implements OnInit {
 
   constructor(
     private checkoutService: CheckoutService,
+    private bookService: BookService,
   ) {
   }
 
   ngOnInit(): void {
+this.getMyBooks()
 
-    this.books$=this.checkoutService.getMyCheckouts("John", "Doe")
 
-    this.books$.subscribe(params=> {
-      console.log("APPAPAPA", params)
-    })
+  }
 
+  getMyBooks() {
+    this.books$ = this.checkoutService.getMyCheckouts("John", "Doe")
   }
 
 
   return(checkout: Checkout) {
-    console.log(checkout)
-  }
+    this.checkoutService.deleteCheckout(checkout.id).subscribe();
 
+    this.bookService.updateStatus(checkout.borrowedBook.id, "RETURNED", "").subscribe(() => {
+      this.getMyBooks()
+    });
+
+  }
 
 
 }

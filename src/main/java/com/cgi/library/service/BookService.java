@@ -35,7 +35,13 @@ public class BookService {
     public BookDTO updateBookStatus(UUID bookId, String status, String dueDate) {
         Book book = bookRepository.getOne(bookId);
         book.setStatus(BookStatus.valueOf(status)); // set the new status value
-        book.setDueDate(LocalDate.parse(dueDate));
+        if (dueDate == "") {
+            book.setDueDate(null);
+        } else {
+
+            book.setDueDate(LocalDate.parse(dueDate));
+        }
+
         bookRepository.save(book); // save the updated book entity to the database
         return ModelMapperFactory.getMapper().map(book, BookDTO.class); // map the updated entity to a DTO and return it
 

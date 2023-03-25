@@ -22,7 +22,7 @@ export class BookDetailComponent implements OnInit {
  // currentDate: string;
   newStatus: string;
   isBorrowed: boolean;
-
+  isReturned: boolean;
 
 
 
@@ -52,8 +52,11 @@ export class BookDetailComponent implements OnInit {
         } else {
           this.isOverdue = false;
         }
+      } else if (book.status ==='RETURNED'){
+        this.isReturned = true;
       } else {
         this.isBorrowed = false;
+
       }
     });
   }
@@ -92,6 +95,7 @@ export class BookDetailComponent implements OnInit {
         this.isBorrowed= false
       }
       console.log(book.id)
+
       this.bookService.updateStatus(book.id, this.newStatus, this.getDueDate()).subscribe(updatedBook => {
         console.log(updatedBook); // Log the updated book to the console
       });

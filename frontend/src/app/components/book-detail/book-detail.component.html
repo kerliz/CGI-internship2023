@@ -49,13 +49,15 @@
       </h3>
       <span  *ngIf="isOverdue"  class="d-inline-block mb-2 text-danger">OVERDUE</span>
     </div>
-    <div class="col otherBoxes" *ngIf="!isBorrowed">
+    <div class="col otherBoxes" *ngIf="isReturned">
+Being processed
+    </div>
+
+    <div class="col otherBoxes" *ngIf="!isBorrowed && !isReturned">
       <strong class="d-inline-block mb-2 text-primary">Checkout</strong>
 
 
       <!-- Button trigger modal -->
-
-
       <h3 class="mb-0">
         <button (click)="checkOut()"  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
           BORROW
@@ -73,14 +75,7 @@
             </div>
           </div>
         </div>
-
-
-
-
       </h3>
-
-
-
     </div>
 
   </div>
