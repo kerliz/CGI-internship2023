@@ -23,6 +23,13 @@ public class CheckOutService {
         return checkOutRepository.findAll(pageable).map(checkOut -> modelMapper.map(checkOut, CheckOutDTO.class));
     }
 
+    public Page<CheckOutDTO> getMyCheckOuts(String firstName, String lastName, Pageable pageable) {
+        ModelMapper modelMapper = ModelMapperFactory.getMapper();
+        return checkOutRepository.findByBorrowerFirstNameAndBorrowerLastName(firstName, lastName, pageable)
+                .map(checkOut -> modelMapper.map(checkOut, CheckOutDTO.class));
+    }
+
+
     public CheckOutDTO getCheckOut(UUID checkOutId) {
         CheckOut checkOut = checkOutRepository.getOne(checkOutId);
         return ModelMapperFactory.getMapper().map(checkOut, CheckOutDTO.class);

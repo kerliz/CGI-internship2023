@@ -27,6 +27,16 @@ public class CheckOutController {
         return ResponseEntity.ok(checkOutService.getCheckOut(checkOutId));
     }
 
+    @GetMapping(value = "getMyCheckouts")
+    public ResponseEntity<Page<CheckOutDTO>> getMyCheckOuts(Pageable pageable, @RequestParam(value = "firstName") String borrowerFirstName , @RequestParam(value = "lastName") String borrowerLastName) {
+        System.out.println(borrowerFirstName);
+        System.out.println("EEEEE");
+
+        return ResponseEntity.ok(checkOutService.getMyCheckOuts(borrowerFirstName, borrowerLastName, pageable));
+    }
+
+
+
     @PostMapping(value = "checkout")
     public ResponseEntity<CheckOutDTO> saveCheckOut(@RequestBody CheckOutDTO checkOutDTO) {
         CheckOutDTO savedCheckOut = checkOutService.saveCheckOut(checkOutDTO);

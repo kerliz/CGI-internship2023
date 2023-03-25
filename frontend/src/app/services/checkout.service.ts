@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { RestUtil } from './rest-util';
 import { Checkout } from "../models/checkout";
+import {Book} from "../models/book";
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,12 @@ export class CheckoutService {
     return this.http.get<Page<Checkout>>(url, {params});
   }
 
+
+  getMyCheckouts(firstName: string, lastName: string): Observable<Page<Checkout>> {
+    const url = this.baseUrl + '/getMyCheckouts'
+    const params = new HttpParams().set('firstName', firstName).set('lastName', lastName);
+    return this.http.get<Page<Checkout>>(url, {params});
+  }
 
   //(id, borrower_first_name, borrower_last_name, book_id, checked_out_date, due_date)
   addToCheckout(book: Checkout): Observable<Checkout> {

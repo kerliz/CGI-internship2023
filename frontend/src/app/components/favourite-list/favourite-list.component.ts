@@ -25,10 +25,8 @@ this.disableLink = false;
     const bookIndex = favoriteBooks.findIndex((b: Book) => b.id === book.id);
     console.log(favoriteBooks)
     if (bookIndex >= 0) {
-      // The book is already in favorites, so remove it
       favoriteBooks.splice(bookIndex, 1);
     } else {
-      // The book is not in favorites, so add it
       favoriteBooks.push(book);
     }
 

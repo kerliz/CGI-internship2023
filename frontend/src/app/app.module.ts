@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import {FormsModule} from "@angular/forms";
 import {CheckoutsListComponent} from "./components/checkouts-list/checkouts-list.component";
 import {FavouriteBooksListComponent} from "./components/favourite-list/favourite-list.component";
+import {MyBooksListComponent} from "./components/my-books-list/mybooks-list.component";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {FavouriteBooksListComponent} from "./components/favourite-list/favourite
     BooksListComponent,
     BookDetailComponent,
     CheckoutsListComponent,
-    FavouriteBooksListComponent
+    FavouriteBooksListComponent,
+    MyBooksListComponent
 
   ],
   imports: [
