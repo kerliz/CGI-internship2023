@@ -2,7 +2,6 @@ import {Component, OnInit} from "@angular/core";
 import {Book} from "../../models/book";
 
 
-
 @Component({
   selector: 'app-favourite-list',
   templateUrl: './favourite-list.component.html',
@@ -16,14 +15,12 @@ export class FavouriteBooksListComponent implements OnInit {
   ngOnInit(): void {
 
     this.items = JSON.parse(localStorage.getItem('favoriteBooks'))
-    console.log(this.items)
-this.disableLink = false;
+    this.disableLink = false;
   }
 
   addToFavorites(book: Book): void {
     let favoriteBooks = JSON.parse(localStorage.getItem('favoriteBooks')) || [];
     const bookIndex = favoriteBooks.findIndex((b: Book) => b.id === book.id);
-    console.log(favoriteBooks)
     if (bookIndex >= 0) {
       favoriteBooks.splice(bookIndex, 1);
     } else {
@@ -31,7 +28,7 @@ this.disableLink = false;
     }
 
     localStorage.setItem('favoriteBooks', JSON.stringify(favoriteBooks));
-   this.disableLink = true
+    this.disableLink = true
   }
 
   isFavorite(book: Book): boolean {

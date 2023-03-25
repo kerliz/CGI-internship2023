@@ -49,9 +49,7 @@ export class BooksListComponent implements OnInit {
       if (status) {
         this.selectedStatus = status as BookStatus;
         this.loadStatus();
-        console.log("EEEEEE")
       } else if(search){
-        console.log("AASFA")
         this.loadBooks();
         this.loadSearch();
       } else {
@@ -74,8 +72,6 @@ export class BooksListComponent implements OnInit {
 
   loadSearch():void {
    this.books$ = this.bookService.searchBooks(this.searchTerm)
-
-    console.log(this.searchTerm)
   }
 
 

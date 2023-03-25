@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { BookService } from '../../services/book.service';
-import { Book } from '../../models/book';
-import { Observable } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
-import { map, switchMap } from 'rxjs/operators';
+import {Component, OnInit} from '@angular/core';
+import {BookService} from '../../services/book.service';
+import {Book} from '../../models/book';
+import {Observable} from 'rxjs';
+import {ActivatedRoute} from '@angular/router';
+import {map, switchMap} from 'rxjs/operators';
 import {CheckoutService} from "../../services/checkout.service";
 import {Page, PageRequest} from "../../models/page";
 import {Checkout} from "../../models/checkout";
@@ -18,7 +18,7 @@ export class CheckoutsListComponent implements OnInit {
 
   page: number = 0;
   tablesSize: number = 30;
-  pageRequest: PageRequest = { pageIndex: this.page, pageSize: this.tablesSize};
+  pageRequest: PageRequest = {pageIndex: this.page, pageSize: this.tablesSize};
 
   checkouts$!: Observable<Page<Checkout>>;
 
@@ -32,28 +32,21 @@ export class CheckoutsListComponent implements OnInit {
     {value: "DAMAGED", label: 'Damaged'},
     {value: "PROCESSING", label: 'Processing'}
   ]
+
   constructor(
     private checkoutService: CheckoutService,
     private route: ActivatedRoute,
-
   ) {
   }
 
   ngOnInit(): void {
 
-this.loadCheckOuts()
+    this.loadCheckOuts()
   }
 
   loadCheckOuts(): void {
     this.checkouts$ = this.checkoutService.getCheckouts(this.pageRequest);
-    this.checkouts$.subscribe({
-      next: (books: Page<Checkout>) => {
-        console.log("checkouts:", books);
-      },
-      error: (error: any) => {
-        console.error(error)
-      }
-    });
+    this.checkouts$.subscribe();
   }
 
   onTableDataChange(event: any) {
@@ -63,7 +56,6 @@ this.loadCheckOuts()
       const status = params['status'];
       if (status) {
         this.selectedStatus = status as BookStatus;
-        //this.loadStatus();
       } else {
         this.loadCheckOuts();
       }

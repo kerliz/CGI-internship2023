@@ -53,7 +53,6 @@ export class BookService {
   updateStatus(bookId: string, newStatus: string, dueDate: string): Observable<Book> {
     const url = this.baseUrl + '/updateBookStatus';
     const params = new HttpParams().set('bookId', bookId).set('status', newStatus).set('dueDate', dueDate);
-    console.log("BODY HA URL", params);
     return this.http.post<Book>(url, params );
   }
 

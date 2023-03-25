@@ -1,9 +1,10 @@
 import {Component, OnInit} from "@angular/core";
 import {CheckoutService} from "../../services/checkout.service";
-import {Observable} from "rxjs";
+import {Observable, of} from "rxjs";
 import {Page} from "../../models/page";
 import {Checkout} from "../../models/checkout";
 import {BookService} from "../../services/book.service";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-mybooks-list',
@@ -26,8 +27,6 @@ export class MyBooksListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMyBooks()
-
-
   }
 
   getMyBooks() {
@@ -35,13 +34,20 @@ export class MyBooksListComponent implements OnInit {
   }
 
 
+
   return(checkout: Checkout) {
     this.checkoutService.deleteCheckout(checkout.id).subscribe();
 
     this.bookService.updateStatus(checkout.borrowedBook.id, "RETURNED", "").subscribe(updatedBook => {
-      this.getMyBooks();
+      this.books$ = this.books$.pipe(
+        map(page => ({
+          ...page,
+          content: page.content.filter(book => book.borrowedBook.id !== updatedBook.id)
+        }))
+      );
+
+
     });
   }
-
 
 }

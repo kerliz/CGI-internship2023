@@ -37,8 +37,6 @@ public class BookService {
     }
 
 
-
-
     public BookDTO updateBookStatus(UUID bookId, String status, String dueDate) {
         Book book = bookRepository.getOne(bookId);
         book.setStatus(BookStatus.valueOf(status)); // set the new status value

@@ -15,8 +15,6 @@ import java.util.UUID;
 @Repository
 public interface BookRepository extends JpaRepository<Book, UUID> {
     Page<Book> findByStatus(BookStatus status, Pageable pageable);
-
-
     @Query("SELECT b FROM Book b WHERE LOWER (b.title) LIKE %:search% OR LOWER (b.author) LIKE %:search% OR LOWER (b.genre) LIKE %:search% OR LOWER (b.year) LIKE %:search%")
     Page<Book> searchBooks(@Param("search") String search, Pageable pageable);
 

@@ -42,7 +42,6 @@ export class CheckoutService {
   deleteCheckout(checkoutId: string): Observable<Checkout> {
     const url = this.baseUrl + '/checkout';
     const params = new HttpParams().set('checkOutId', checkoutId);
-    console.log(params)
     return this.http.delete<Checkout>(url, {params});
   }
 

@@ -41,7 +41,6 @@ public class CheckOutService {
     }
 
     public UUID deleteCheckOut(UUID checkOutId) {
-        System.out.println(checkOutId);
         checkOutRepository.deleteById(checkOutId);
         return checkOutId;
     }
