@@ -19,6 +19,7 @@ export class BooksListComponent implements OnInit {
   books$!: Observable<Page<Book>>;
   pageRequest: PageRequest = {pageIndex: this.page, pageSize: this.tablesSize, status: this.value};
 
+  searchTerm: string;
   selectedStatus: BookStatus;
 
 
@@ -37,13 +38,24 @@ export class BooksListComponent implements OnInit {
 
 
   ngOnInit(): void {
+
+
     this.route.params.subscribe(params => {
+      this.searchTerm = params['value']
+
+      const search = params['value']
+
       const status = params['status'];
       if (status) {
         this.selectedStatus = status as BookStatus;
         this.loadStatus();
-      } else {
+        console.log("EEEEEE")
+      } else if(search){
+        console.log("AASFA")
         this.loadBooks();
+        this.loadSearch();
+      } else {
+        this.loadBooks()
       }
     });
 
@@ -57,8 +69,13 @@ export class BooksListComponent implements OnInit {
 
 
   loadBooks(): void {
-
     this.books$ = this.bookService.getBooks(this.pageRequest);
+  }
+
+  loadSearch():void {
+   this.books$ = this.bookService.searchBooks(this.searchTerm)
+
+    console.log(this.searchTerm)
   }
 
 
@@ -67,10 +84,14 @@ export class BooksListComponent implements OnInit {
     this.pageRequest.pageIndex = this.page - 1;
     this.route.params.subscribe(params => {
       const status = params['status'];
+      const search = params['value']
+
       if (status) {
         this.selectedStatus = status as BookStatus;
         this.loadStatus();
-      } else {
+      } else if(search) {
+        this.loadSearch()
+      }else {
         this.loadBooks();
       }
     });

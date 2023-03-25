@@ -19,8 +19,8 @@
             <a class="nav-link active" aria-current="page"   routerLink="/mybooks">My Books</a>
           </li>
         </ul>
-        <form class="d-flex" role="search"  >
-          <input type="text" name="search" ngModel class="form-control me-2" type="search" placeholder="Search books" aria-label="Search"
+        <form   #searchForm="ngForm" class="d-flex" role="search"  (ngSubmit)="onSubmit(searchForm)" >
+          <input  [(ngModel)]="searchTerm" type="text" name="search" ngModel class="form-control me-2" type="search" placeholder="Search books" aria-label="Search"
                 autocomplete="off"
           >
           <button class="btn btn-success" type="submit">Search</button>

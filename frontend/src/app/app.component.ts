@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {Router} from "@angular/router";
+import {NgForm} from "@angular/forms";
 //import { BookSearch} from './components/books-list/books-list.component'
 
 
@@ -10,6 +12,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'frontend';
+  searchTerm = '';
+  constructor(private router: Router) { }
 
 
+  onSubmit(searchForm: NgForm) {
+    this.searchTerm = searchForm.value.search;
+    this.router.navigate(['/books/search', this.searchTerm]);
+  }
 }

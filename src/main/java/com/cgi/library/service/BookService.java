@@ -31,6 +31,13 @@ public class BookService {
         return bookRepository.findByStatus(search, pageable).map(book -> modelMapper.map(book, BookDTO.class));
     }
 
+    public Page<BookDTO> searchBooks(String search, Pageable pageable) {
+        ModelMapper modelMapper = ModelMapperFactory.getMapper();
+        return bookRepository.searchBooks(search.toLowerCase(), pageable).map(book -> modelMapper.map(book, BookDTO.class));
+    }
+
+
+
 
     public BookDTO updateBookStatus(UUID bookId, String status, String dueDate) {
         Book book = bookRepository.getOne(bookId);
@@ -41,7 +48,6 @@ public class BookService {
 
             book.setDueDate(LocalDate.parse(dueDate));
         }
-
         bookRepository.save(book); // save the updated book entity to the database
         return ModelMapperFactory.getMapper().map(book, BookDTO.class); // map the updated entity to a DTO and return it
 

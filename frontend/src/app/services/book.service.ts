@@ -32,7 +32,6 @@ export class BookService {
       size: filter.pageSize.toString(),
       status: filter.status
     };
-    console.log("PAPAPP", params)
     return this.http.get<Page<Book>>(url, {params});
   }
 
@@ -42,12 +41,23 @@ export class BookService {
     const params = new HttpParams().set('bookId', bookId);
     return this.http.get<Book>(url, {params});
   }
+
+  searchBooks(searchValue: string): Observable<Page<Book>> {
+    const url = this.baseUrl + '/searchBooks';
+    const params = new HttpParams().set('searchValue', searchValue);
+    return this.http.get<Page<Book>>(url, {params});
+  }
+
+
+
   updateStatus(bookId: string, newStatus: string, dueDate: string): Observable<Book> {
     const url = this.baseUrl + '/updateBookStatus';
     const params = new HttpParams().set('bookId', bookId).set('status', newStatus).set('dueDate', dueDate);
     console.log("BODY HA URL", params);
     return this.http.post<Book>(url, params );
   }
+
+
 
 
   saveBook(book: Book): Observable<void> {

@@ -30,11 +30,19 @@ public class BookController {
         return ResponseEntity.ok(bookService.getBooksByStatus(value, pageable));
     }
 
+    @GetMapping(value = "searchBooks")
+    public ResponseEntity<Page<BookDTO>> searchBooks(@RequestParam("searchValue") String value, Pageable pageable) {
+        return ResponseEntity.ok(bookService.searchBooks(value, pageable));
+    }
+
 
     @GetMapping(value = "getBook")
     public ResponseEntity<BookDTO> getBook(@RequestParam(value = "bookId") UUID bookId) {
         return ResponseEntity.ok(bookService.getBook(bookId));
     }
+
+
+
 
     @PostMapping(value = "updateBookStatus")
     public ResponseEntity<BookDTO>  updateBookStatus(@RequestParam(value = "bookId") UUID bookId, @RequestParam(value = "status") String status, @RequestParam(value = "dueDate") String dueDate) {
