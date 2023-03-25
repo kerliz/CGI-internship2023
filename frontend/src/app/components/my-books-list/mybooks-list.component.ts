@@ -25,7 +25,7 @@ export class MyBooksListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-this.getMyBooks()
+    this.getMyBooks()
 
 
   }
@@ -38,10 +38,9 @@ this.getMyBooks()
   return(checkout: Checkout) {
     this.checkoutService.deleteCheckout(checkout.id).subscribe();
 
-    this.bookService.updateStatus(checkout.borrowedBook.id, "RETURNED", "").subscribe(() => {
-      this.getMyBooks()
+    this.bookService.updateStatus(checkout.borrowedBook.id, "RETURNED", "").subscribe(updatedBook => {
+      this.getMyBooks();
     });
-
   }
 
 

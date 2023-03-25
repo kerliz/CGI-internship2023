@@ -40,8 +40,9 @@ public class CheckOutService {
         return checkOutDTO;
     }
 
-    public void deleteCheckOut(UUID checkOutId) {
+    public UUID deleteCheckOut(UUID checkOutId) {
         System.out.println(checkOutId);
         checkOutRepository.deleteById(checkOutId);
+        return checkOutId;
     }
 }

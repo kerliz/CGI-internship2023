@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {BookService} from '../../services/book.service';
 import {Book} from '../../models/book';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {map, switchMap} from 'rxjs/operators';
 import {CheckoutService} from "../../services/checkout.service";
@@ -46,6 +46,7 @@ export class BookDetailComponent implements OnInit {
     this.book$.subscribe(book => {
       if (book.status === 'BORROWED') {
         this.isBorrowed = true;
+        book.dueDate = this.getDueDate()
         this.getCurrentDate()
         if (this.getCurrentDate() > book.dueDate) {
           this.isOverdue = true;
@@ -86,18 +87,15 @@ export class BookDetailComponent implements OnInit {
           checkedOutDate: this.getCurrentDate(),
           dueDate: this.getDueDate(),
         };
-        console.log(this.getCurrentDate())
-        this.checkOutService.addToCheckout(checkout).subscribe(result => {
-          console.log(result); // Log the result to the console
+        this.checkOutService.addToCheckout(checkout).subscribe(() => {
         });
       } else if (book.status === 'BORROWED') {
         this.newStatus = 'AVAILABLE'
         this.isBorrowed= false
       }
-      console.log(book.id)
 
       this.bookService.updateStatus(book.id, this.newStatus, this.getDueDate()).subscribe(updatedBook => {
-        console.log(updatedBook); // Log the updated book to the console
+        this.book$ = of(updatedBook);
       });
     })
   }
