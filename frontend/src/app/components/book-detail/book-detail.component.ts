@@ -46,11 +46,12 @@ export class BookDetailComponent implements OnInit {
     this.book$.subscribe(book => {
       if (book.status === 'BORROWED') {
         this.isBorrowed = true;
-        book.dueDate = this.getDueDate()
         this.getCurrentDate()
         if (this.getCurrentDate() > book.dueDate) {
+          console.log("ON {LE")
           this.isOverdue = true;
         } else {
+          console.log("PIFEM EI")
           this.isOverdue = false;
         }
       } else if (book.status ==='RETURNED'){

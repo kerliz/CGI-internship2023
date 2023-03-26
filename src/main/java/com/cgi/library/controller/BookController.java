@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -18,10 +19,18 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
-    @GetMapping(value = "getBooks")
-    public ResponseEntity<Page<BookDTO>> getBooks(Pageable pageable) {
 
-        return ResponseEntity.ok(bookService.getBooks(pageable));
+    /*
+       @GetMapping(value = "getCheckouts")
+    public ResponseEntity<Page<CheckOutDTO>> getCheckOuts(Pageable pageable, @RequestParam (value = "sort") Optional<String> sort) {
+        return ResponseEntity.ok(checkOutService.getCheckOuts(pageable, sort));
+    }
+
+     */
+    @GetMapping(value = "getBooks")
+    public ResponseEntity<Page<BookDTO>> getBooks(Pageable pageable, @RequestParam (value = "sort") Optional<String> sort) {
+
+        return ResponseEntity.ok(bookService.getBooks(pageable, sort));
     }
 
 

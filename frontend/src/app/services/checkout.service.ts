@@ -25,6 +25,16 @@ export class CheckoutService {
     return this.http.get<Page<Checkout>>(url, {params});
   }
 
+  getSorting(filter: Partial<PageRequest>, sortField: string, sortDirection: string): Observable<Page<Checkout>> {
+    const url = this.baseUrl + '/getSorting';
+    const params = RestUtil.buildParamsFromPageRequest(filter);
+    params.append('sortField', sortField);
+    params.append('sortDirection', sortDirection);
+
+    return this.http.get<Page<Checkout>>(url, {params});
+  }
+
+
 
   getMyCheckouts(firstName: string, lastName: string): Observable<Page<Checkout>> {
     const url = this.baseUrl + '/getMyCheckouts'

@@ -1,11 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {BookService} from '../../services/book.service';
-import {Book} from '../../models/book';
 import {Observable} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
-import {map, switchMap} from 'rxjs/operators';
 import {CheckoutService} from "../../services/checkout.service";
-import {Page, PageRequest} from "../../models/page";
+import {Page, PageRequest, SortDirection} from "../../models/page";
 import {Checkout} from "../../models/checkout";
 import {BookStatus} from "../../models/book-status";
 
@@ -18,20 +15,17 @@ export class CheckoutsListComponent implements OnInit {
 
   page: number = 0;
   tablesSize: number = 30;
-  pageRequest: PageRequest = {pageIndex: this.page, pageSize: this.tablesSize};
+
 
   checkouts$!: Observable<Page<Checkout>>;
-
   selectedStatus: BookStatus;
 
+  sortField = 'id';
+  sortDirection = 'asc'
 
-  statusOptions = [
-    {value: "AVAILABLE", label: 'Available'},
-    {value: "BORROWED", label: 'Borrowed'},
-    {value: "RETURNED", label: 'Returned'},
-    {value: "DAMAGED", label: 'Damaged'},
-    {value: "PROCESSING", label: 'Processing'}
-  ]
+  pageRequest: PageRequest = {pageIndex: this.page, pageSize: this.tablesSize, sort: this.sortField, direction: this.sortDirection as SortDirection};
+
+
 
   constructor(
     private checkoutService: CheckoutService,
@@ -44,13 +38,32 @@ export class CheckoutsListComponent implements OnInit {
     this.loadCheckOuts()
   }
 
+
+  sort(sortField: string) {
+    const sortDirection = this.sortField === sortField ? (this.sortDirection === 'asc' ? 'desc' : 'asc') : 'asc';
+    this.sortField = sortField;
+    this.sortDirection = sortDirection as SortDirection;
+    console.log(sortDirection)
+    console.log(this.sortField)
+    this.pageRequest = {
+      pageIndex: this.page - 1,
+      pageSize: this.tablesSize,
+      sort: this.sortField,
+      direction: this.sortDirection === 'asc' ? 'asc' : 'desc'
+    };
+    this.loadCheckOuts();
+  }
+
+
+
   loadCheckOuts(): void {
     this.checkouts$ = this.checkoutService.getCheckouts(this.pageRequest);
-    this.checkouts$.subscribe();
+    //this.checkouts$.subscribe();
   }
 
   onTableDataChange(event: any) {
     this.page = event;
+    console.log(event)
     this.pageRequest.pageIndex = this.page - 1;
     this.route.params.subscribe(params => {
       const status = params['status'];
@@ -61,15 +74,6 @@ export class CheckoutsListComponent implements OnInit {
       }
     });
   }
-
-  /*
-  loadStatus() {
-    this.value = this.selectedStatus;
-    this.pageRequest.status = this.value;
-    this.books$ = this.bookService.getBooksStatus(this.pageRequest)
-  }
-
-   */
 
 
 }

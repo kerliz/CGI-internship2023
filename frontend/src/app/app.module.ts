@@ -15,6 +15,9 @@ import {FormsModule} from "@angular/forms";
 import {CheckoutsListComponent} from "./components/checkouts-list/checkouts-list.component";
 import {FavouriteBooksListComponent} from "./components/favourite-list/favourite-list.component";
 import {MyBooksListComponent} from "./components/my-books-list/mybooks-list.component";
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+
 
 @NgModule({
   declarations: [
@@ -35,6 +38,8 @@ import {MyBooksListComponent} from "./components/my-books-list/mybooks-list.comp
     BrowserAnimationsModule,
     MaterialModule,
     FormsModule,
+    MatTableModule,
+    MatSortModule,
 
 
   ],

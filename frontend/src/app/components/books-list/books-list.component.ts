@@ -1,10 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {BookService} from '../../services/book.service';
 import {Observable} from 'rxjs';
-import {Page, PageRequest} from '../../models/page';
+import {Page, PageRequest, SortDirection} from '../../models/page';
 import {Book} from '../../models/book';
 import {BookStatus} from "../../models/book-status";
 import {ActivatedRoute} from "@angular/router";
+import {MatSort} from "@angular/material/sort";
+import {MatTableDataSource} from "@angular/material/table";
+import {PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-books-list',
@@ -12,15 +15,22 @@ import {ActivatedRoute} from "@angular/router";
   styleUrls: ['./books-list.component.scss']
 })
 export class BooksListComponent implements OnInit {
+  @ViewChild(MatSort) sort: MatSort;
 
   page: number = 0;
-  tablesSize: number = 22;
+  tablesSize: number = 20;
   value: string = '';
+  bookColumns = ['bookTitle', 'bookAuthor','bookGenre','bookYear', 'bookStatus', 'addFavorites'];
+
   books$!: Observable<Page<Book>>;
-  pageRequest: PageRequest = {pageIndex: this.page, pageSize: this.tablesSize, status: this.value};
+
+  sortField = 'id';
+  sortDirection = 'asc'
+  pageRequest: PageRequest = {pageIndex: this.page, pageSize: this.tablesSize, status: this.value, direction: this.sortDirection as SortDirection, sort: this.sortField};
 
   searchTerm: string;
   selectedStatus: BookStatus;
+  booksDataSource = new MatTableDataSource<Book>();
 
 
   statusOptions = [
@@ -39,6 +49,7 @@ export class BooksListComponent implements OnInit {
 
   ngOnInit(): void {
 
+  //  this.loadBooks();
 
     this.route.params.subscribe(params => {
       this.searchTerm = params['value']
@@ -50,7 +61,6 @@ export class BooksListComponent implements OnInit {
         this.selectedStatus = status as BookStatus;
         this.loadStatus();
       } else if(search){
-        this.loadBooks();
         this.loadSearch();
       } else {
         this.loadBooks()
@@ -59,39 +69,74 @@ export class BooksListComponent implements OnInit {
 
   }
 
+  sorting(sortField: string) {
+    const sortDirection = this.sortField === sortField ? (this.sortDirection === 'asc' ? 'desc' : 'asc') : 'asc';
+    this.sortField = sortField;
+    this.sortDirection = sortDirection as SortDirection;
+    console.log(sortDirection)
+    console.log(this.sortField)
+    this.pageRequest = {
+      pageIndex: this.page - 1,
+      pageSize: this.tablesSize,
+      sort: this.sortField,
+      direction: this.sortDirection === 'asc' ? 'asc' : 'desc'
+    };
+    if (this.sortField === 'year') {
+      console.log("AAAAAAGS")
+      this.pageRequest.sort = 'year';
+    }
+    this.loadBooks();
+  }
+  loadBooks(): void {
+    this.pageRequest.pageIndex = this.page - 1;
+    this.books$ = this.bookService.getBooks(this.pageRequest);
+    this.books$.subscribe(books => {
+      this.booksDataSource.data = books.content;
+      this.booksDataSource.sort = this.sort;
+    });
+  }
+
   loadStatus() {
     this.value = this.selectedStatus;
     this.pageRequest.status = this.value;
     this.books$ = this.bookService.getBooksStatus(this.pageRequest)
-  }
-
-
-  loadBooks(): void {
-    this.books$ = this.bookService.getBooks(this.pageRequest);
-  }
-
-  loadSearch():void {
-   this.books$ = this.bookService.searchBooks(this.searchTerm)
-  }
-
-
-  onTableDataChange(event: any) {
-    this.page = event;
-    this.pageRequest.pageIndex = this.page - 1;
-    this.route.params.subscribe(params => {
-      const status = params['status'];
-      const search = params['value']
-
-      if (status) {
-        this.selectedStatus = status as BookStatus;
-        this.loadStatus();
-      } else if(search) {
-        this.loadSearch()
-      }else {
-        this.loadBooks();
-      }
+    this.books$.subscribe(books => {
+      this.booksDataSource.data = books.content;
+      this.booksDataSource.sort = this.sort;
     });
   }
+
+
+
+  loadSearch():void {
+
+    this.books$ = this.bookService.searchBooks(this.searchTerm)
+    this.books$.subscribe(books => {
+      this.booksDataSource.data = books.content;
+      this.booksDataSource.sort = this.sort;
+    });
+  }
+
+
+  onTableDataChange(event: PageEvent) {
+    this.page = event.pageIndex + 1;
+    this.tablesSize = event.pageSize;
+    this.pageRequest.pageIndex = this.page - 1;
+    this.pageRequest.pageSize = this.tablesSize;
+    const status = this.selectedStatus;
+    const search = this.searchTerm;
+
+    if (status) {
+      this.pageRequest.status = status;
+      this.loadStatus();
+    } else if (search) {
+     // this.pageRequest.searchTerm = search;
+      this.loadSearch();
+    } else {
+      this.loadBooks();
+    }
+  }
+
 
 
   addToFavorites(book: Book): void {

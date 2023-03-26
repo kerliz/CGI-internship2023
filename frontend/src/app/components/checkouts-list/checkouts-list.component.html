@@ -1,3 +1,6 @@
+
+
+
 <section class="jumbotron text-center">
   <div class="container d-flex align-items-center justify-content-center">
     <div>
@@ -11,15 +14,16 @@
     <mat-card-content>
       <mat-nav-list *ngIf="(checkouts$ | async) as checkouts">
         <div class="col-md-12 mt-3">
-          <table class="table table-striped table-dark table-sm">
+          <table class="table table-striped  table-sm table-hover">
             <thead>
             <tr>
 
-              <th scope="col">First Name</th>
-              <th scope="col">Last Name</th>
-              <th scope="col">Borrowed book</th>
-              <th scope="col">Checked out</th>
-              <th scope="col">Due date</th>
+              <th scope="col"><button (click)="sort('borrowerFirstName')">First Name</button> </th>
+              <th scope="col"><button (click)="sort('borrowerLastName')">Last Name</button></th>
+              <th scope="col"><button (click)="sort('borrowedBook.title')">Borrowed book</button></th>
+              <th scope="col"><button (click)="sort('checkedOutDate')">Checked out</button></th>
+              <th scope="col"><button (click)="sort('dueDate')"> Due date </button></th>
+
             </tr>
             </thead>
             <tbody>
