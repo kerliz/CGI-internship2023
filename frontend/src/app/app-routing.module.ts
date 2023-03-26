@@ -14,7 +14,6 @@ const routes: Routes = [
   {path: 'books/status/:status', component: BooksListComponent},
   {path: 'favourites', component: FavouriteBooksListComponent},
   {path: 'mybooks', component: MyBooksListComponent},
-  {path: 'addCheckout', component: BookDetailComponent}, // TODO not using
   {path: 'books/search/:value', component: BooksListComponent}
 
 ];

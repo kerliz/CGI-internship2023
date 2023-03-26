@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {Router} from "@angular/router";
 import {NgForm} from "@angular/forms";
-//import { BookSearch} from './components/books-list/books-list.component'
 
 
 
@@ -19,5 +18,7 @@ export class AppComponent {
   onSubmit(searchForm: NgForm) {
     this.searchTerm = searchForm.value.search;
     this.router.navigate(['/books/search', this.searchTerm]);
+
+    searchForm.resetForm()
   }
 }
