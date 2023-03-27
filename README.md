@@ -1,3 +1,40 @@
+
+## Added functionalities
+Uses dummy user `John Doe`
+
+* `Library page `
+   - Filtering - filter books by status (Available, Borrowed or Returned) - book appears to returns after user has borrowed a book and then returned it from my books tab
+   - Sorting - sort books by title, author and year
+   - Searching - search by title, author, genre and year (case-insensitive)
+   - Sorting works also with search and filtering
+   - Adding books to favorites - add book to favorites <span style="color: yellow">&#9733;</span> (works from Checkouts and Library page)
+---
+* `Checkouts`
+   * Possible to sort by every value on the page
+   * Implemented different pagination than in `Library page` view
+---
+* `My Books`
+   - View for my borrowed books
+   - Possible to return borrowed books, which changes book status to <a style="color:white; text-decoration:none; background-color:rgb(13,202,240); font-size:13px; padding:1px 6px; border-radius:5px;">Returned </a>
+
+---
+* `Book view`
+   - Clicking on a title (from all pages) opens up single book view with information of book and possibility to borrow it
+   - When book as exceeded the duedate, it gives warning that it's  <span style="color:red;">OVERDUE</span>
+   - When borrowing book it gives pop-up modal with due date 2 weeks from current date
+   - After borrowing a book it also shows the data in `Checkouts` tab
+
+---
+
+### Impressions 
+
+```
+Since it was my first project using Angular and Spring boot or Java at all, then at first everything was quite difficult. 
+Last thing i implemented was sorting which turned out to be much more difficult than i imagined at first. Implementing search on the other hand was much easier, at first it was kind of one of the first things i tried but wasn't able to finish, came back later to it and it wasn't too bad at all
+```
+----------------------------------------------------------------------------
+---
+
 # Test assignment
 
 Welcome to CGI test assignment!
