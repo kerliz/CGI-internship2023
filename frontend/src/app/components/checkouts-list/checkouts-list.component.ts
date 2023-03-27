@@ -40,6 +40,7 @@ export class CheckoutsListComponent implements OnInit {
 
 
   sort(sortField: string) {
+
     const sortDirection = this.sortField === sortField ? (this.sortDirection === 'asc' ? 'desc' : 'asc') : 'asc';
     this.sortField = sortField;
     this.sortDirection = sortDirection as SortDirection;
@@ -58,7 +59,6 @@ export class CheckoutsListComponent implements OnInit {
 
   loadCheckOuts(): void {
     this.checkouts$ = this.checkoutService.getCheckouts(this.pageRequest);
-    //this.checkouts$.subscribe();
   }
 
   onTableDataChange(event: any) {
@@ -74,6 +74,4 @@ export class CheckoutsListComponent implements OnInit {
       }
     });
   }
-
-
 }

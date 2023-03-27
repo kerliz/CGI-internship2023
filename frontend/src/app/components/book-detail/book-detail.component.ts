@@ -25,8 +25,6 @@ export class BookDetailComponent implements OnInit {
   isReturned: boolean;
 
 
-
-
   constructor(
     private route: ActivatedRoute,
     private bookService: BookService,

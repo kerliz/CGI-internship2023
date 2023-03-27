@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {CheckoutService} from "../../services/checkout.service";
-import {Observable, of} from "rxjs";
+import {Observable} from "rxjs";
 import {Page} from "../../models/page";
 import {Checkout} from "../../models/checkout";
 import {BookService} from "../../services/book.service";
@@ -45,8 +45,6 @@ export class MyBooksListComponent implements OnInit {
           content: page.content.filter(book => book.borrowedBook.id !== updatedBook.id)
         }))
       );
-
-
     });
   }
 

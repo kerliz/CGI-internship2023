@@ -4,9 +4,7 @@ import com.cgi.library.model.CheckOutDTO;
 import com.cgi.library.service.CheckOutService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,20 +24,6 @@ public class CheckOutController {
     }
 
 
-    /*
-    @GetMapping(value = "getSorting")
-    public ResponseEntity<Page<CheckOutDTO>> getSorting() {
-       // Pageable pageable = PageRequest.of(page, size, Sort.by(sort[0]).direction(Sort.Direction.valueOf(sort[1])));
-
-
-
-        return ResponseEntity.ok(checkOutService.getSorting(pageable));
-    }
-
-     */
-
-
-
     @GetMapping(value = "getCheckout")
     public ResponseEntity<CheckOutDTO> getCheckOut(@RequestParam(value = "checkOutId") UUID checkOutId) {
         return ResponseEntity.ok(checkOutService.getCheckOut(checkOutId));
@@ -50,7 +34,6 @@ public class CheckOutController {
 
         return ResponseEntity.ok(checkOutService.getMyCheckOuts(borrowerFirstName, borrowerLastName, pageable));
     }
-
 
 
     @PostMapping(value = "checkout")

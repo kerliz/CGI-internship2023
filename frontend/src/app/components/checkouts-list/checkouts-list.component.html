@@ -1,4 +1,4 @@
-
+<!-- CSS for the sorting values is from here - https://codepen.io/xaprio/pen/NWPXwOj -->
 
 
 <section class="jumbotron text-center">
@@ -18,11 +18,11 @@
             <thead>
             <tr>
 
-              <th scope="col"><button (click)="sort('borrowerFirstName')">First Name</button> </th>
-              <th scope="col"><button (click)="sort('borrowerLastName')">Last Name</button></th>
-              <th scope="col"><button (click)="sort('borrowedBook.title')">Borrowed book</button></th>
-              <th scope="col"><button (click)="sort('checkedOutDate')">Checked out</button></th>
-              <th scope="col"><button (click)="sort('dueDate')"> Due date </button></th>
+              <th scope="col"><a class="sort-by" (click)="sort('borrowerFirstName')">First Name</a> </th>
+              <th scope="col"><a class="sort-by" (click)="sort('borrowerLastName')">Last Name</a></th>
+              <th scope="col"><a class="sort-by" (click)="sort('borrowedBook.title')">Borrowed book</a></th>
+              <th scope="col"><a class="sort-by" (click)="sort('checkedOutDate')">Checked out</a></th>
+              <th scope="col"><a class="sort-by" (click)="sort('dueDate')"> Due date </a></th>
 
             </tr>
             </thead>
@@ -31,7 +31,7 @@
 
               <td >{{checkout.borrowerFirstName}}</td>
               <td>{{checkout.borrowerLastName}}</td>
-              <th  [routerLink]="['/books', checkout.borrowedBook.id]" >{{checkout.borrowedBook.title}}</th>
+              <td  [routerLink]="['/books', checkout.borrowedBook.id]"  class="bookTitle">{{checkout.borrowedBook.title}}</td>
               <td>{{checkout.checkedOutDate}}</td>
               <td>{{checkout.dueDate}}</td>
 

@@ -20,28 +20,19 @@ public class BookController {
     private BookService bookService;
 
 
-    /*
-       @GetMapping(value = "getCheckouts")
-    public ResponseEntity<Page<CheckOutDTO>> getCheckOuts(Pageable pageable, @RequestParam (value = "sort") Optional<String> sort) {
-        return ResponseEntity.ok(checkOutService.getCheckOuts(pageable, sort));
-    }
-
-     */
     @GetMapping(value = "getBooks")
     public ResponseEntity<Page<BookDTO>> getBooks(Pageable pageable, @RequestParam (value = "sort") Optional<String> sort) {
-
         return ResponseEntity.ok(bookService.getBooks(pageable, sort));
     }
 
-
     @GetMapping(value = "getBooksByStatus")
-    public ResponseEntity<Page<BookDTO>> getAvailableBooks(@RequestParam("status") BookStatus value, Pageable pageable) {
-        return ResponseEntity.ok(bookService.getBooksByStatus(value, pageable));
+    public ResponseEntity<Page<BookDTO>> getAvailableBooks(@RequestParam("status") BookStatus value, Pageable pageable, @RequestParam (value = "sort") Optional<String> sort) {
+        return ResponseEntity.ok(bookService.getBooksByStatus(value, pageable,sort));
     }
 
     @GetMapping(value = "searchBooks")
-    public ResponseEntity<Page<BookDTO>> searchBooks(@RequestParam("searchValue") String value, Pageable pageable) {
-        return ResponseEntity.ok(bookService.searchBooks(value, pageable));
+    public ResponseEntity<Page<BookDTO>> searchBooks(@RequestParam("searchValue") String value, Pageable pageable,  @RequestParam (value = "sort") Optional<String> sort) {
+        return ResponseEntity.ok(bookService.searchBooks(value, pageable, sort));
     }
 
 
@@ -51,14 +42,10 @@ public class BookController {
     }
 
 
-
-
     @PostMapping(value = "updateBookStatus")
     public ResponseEntity<BookDTO>  updateBookStatus(@RequestParam(value = "bookId") UUID bookId, @RequestParam(value = "status") String status, @RequestParam(value = "dueDate") String dueDate) {
         return ResponseEntity.ok(bookService.updateBookStatus(bookId, status, dueDate));
     }
-
-
 
 
     @PostMapping(value = "saveBook")

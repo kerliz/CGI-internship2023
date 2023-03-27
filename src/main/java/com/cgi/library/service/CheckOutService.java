@@ -41,9 +41,6 @@ public class CheckOutService {
     }
 
 
-
-
-
     public Page<CheckOutDTO> getMyCheckOuts(String firstName, String lastName, Pageable pageable) {
         ModelMapper modelMapper = ModelMapperFactory.getMapper();
         return checkOutRepository.findByBorrowerFirstNameAndBorrowerLastName(firstName, lastName, pageable)

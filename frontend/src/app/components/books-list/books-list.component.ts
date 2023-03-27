@@ -17,21 +17,28 @@ import {PageEvent} from "@angular/material/paginator";
 })
 export class BooksListComponent implements OnInit {
   //@ViewChild(MatSort) sort: MatSort;
-  @ViewChild('firstSort', { static: false }) firstSort: MatSort;
+  @ViewChild('firstSort', {static: false}) firstSort: MatSort;
 
 
   //todo https://www.angularjswiki.com/material/mat-table-sort/ - sortimiseks
   page: number = 0;
   tablesSize: number = 20;
   value: string = '';
-  bookColumns = ['title', 'author','bookGenre','year', 'bookStatus', 'addFavorites'];
+  bookColumns = ['title', 'author', 'bookGenre', 'year', 'bookStatus', 'addFavorites'];
 
   books$!: Observable<Page<Book>>;
 
   sortField = 'id';
   sortDirection = 'asc'
-  searchValue:  string = ''
-  pageRequest: PageRequest = {pageIndex: this.page, pageSize: this.tablesSize, status: this.value, direction: this.sortDirection as SortDirection, sort: this.sortField, searchValue: this.searchValue};
+  searchValue: string = ''
+  pageRequest: PageRequest = {
+    pageIndex: this.page,
+    pageSize: this.tablesSize,
+    status: this.value,
+    direction: this.sortDirection as SortDirection,
+    sort: this.sortField,
+    searchValue: this.searchValue
+  };
 
   searchTerm: string;
   selectedStatus: BookStatus;
@@ -54,43 +61,18 @@ export class BooksListComponent implements OnInit {
 
   ngOnInit(): void {
 
-  //  this.loadBooks();
     this.booksDataSource.sort = this.firstSort
 
-    this.route.params.subscribe(params => {
-      this.searchTerm = params['value']
-
-
-      const search = params['value']
-      this.searchValue = search
-      console.log("^^^",this.searchValue)
-      const status = params['status'];
-      if (status) {
-        this.selectedStatus = status as BookStatus;
-        this.loadStatus();
-      } else if(search){
-        this.loadSearch();
-      } else {
-        this.loadBooks()
-      }
-    });
-
+    this.checkRoute()
   }
 
 
-
   ngAfterViewInit() {
-    console.log(this.booksDataSource)
-    console.log("GIST", this.firstSort)
+    this.firstSort.disableClear = true;
+
     this.booksDataSource.sort = this.firstSort
-   // this.loadBooks()
-
-    //this.firstSort = this.booksDataSource
-
     this.firstSort.sortChange.subscribe(() => {
-      //this.pageRequest.direction = this.sort.direction as SortDirection;
-     // this.pageRequest.sort = this.sort.active;
-      this.loadBooks();
+      this.checkRoute()
     });
   }
 
@@ -99,10 +81,10 @@ export class BooksListComponent implements OnInit {
     const sortDirection = this.sortField === sortField ? (this.sortDirection === 'asc' ? 'desc' : 'asc') : 'asc';
     this.sortField = sortField;
     this.sortDirection = sortDirection as SortDirection;
-    console.log(sortDirection)
-    console.log(this.sortField)
+    this.checkRoute()
+
     this.pageRequest = {
-      pageIndex: this.page - 1,
+      pageIndex: this.page,
       pageSize: this.tablesSize,
       sort: this.sortField,
       direction: this.sortDirection === 'asc' ? 'asc' : 'desc'
@@ -110,21 +92,40 @@ export class BooksListComponent implements OnInit {
     if (this.sortField === 'year') {
       this.pageRequest.sort = 'year';
     }
-    this.loadBooks();
+    this.checkRoute()
+
   }
+
   loadBooks(): void {
     this.pageRequest.pageIndex = this.page - 1;
+
+    this.pageRequest.sort = this.sortField
     this.books$ = this.bookService.getBooks(this.pageRequest);
     this.books$.subscribe(books => {
       this.booksDataSource.data = books.content;
       this.booksDataSource.sort = this.firstSort;
+    });
+  }
 
+  loadSearch(): void {
+    this.pageRequest.pageIndex = this.page;
+    this.pageRequest.sort = this.sortField
+    this.pageRequest.searchValue = this.searchValue
+
+    this.books$ = this.bookService.searchBooks(this.pageRequest)
+    this.books$.subscribe(books => {
+      this.booksDataSource.data = books.content;
+      this.booksDataSource.sort = this.firstSort;
     });
   }
 
   loadStatus() {
-    this.value = this.selectedStatus;
-    this.pageRequest.status = this.value;
+    this.pageRequest.pageIndex = this.page;
+    this.pageRequest.sort = this.sortField;
+    this.pageRequest.direction = this.sortDirection === 'asc' ? 'asc' : 'desc';
+    if (this.selectedStatus !== undefined && this.selectedStatus !== null) {
+      this.pageRequest.status = this.selectedStatus;
+    }
     this.books$ = this.bookService.getBooksStatus(this.pageRequest)
     this.books$.subscribe(books => {
       this.booksDataSource.data = books.content;
@@ -134,16 +135,20 @@ export class BooksListComponent implements OnInit {
 
 
 
-  loadSearch() {
-    this.pageRequest.searchValue = this.searchValue
-    this.books$ = this.bookService.searchBooks(this.pageRequest)
-    console.log(this.pageRequest)
-    this.books$.subscribe(books => {
-
-      this.booksDataSource.data = books.content;
-      this.booksDataSource.sort = this.firstSort;
-      console.log(books)
-
+  checkRoute() {
+    this.route.params.subscribe(params => {
+      this.searchTerm = params['value']
+      const search = params['value']
+      this.searchValue = search
+      const status = params['status'];
+      if (status) {
+        this.selectedStatus = status as BookStatus;
+        this.loadStatus();
+      } else if (search) {
+        this.loadSearch();
+      } else {
+        this.loadBooks()
+      }
     });
   }
 
@@ -155,19 +160,19 @@ export class BooksListComponent implements OnInit {
     this.pageRequest.pageSize = this.tablesSize;
     const status = this.selectedStatus;
     const search = this.searchTerm;
-    console.log("REGQUER", this.pageRequest)
+    this.pageRequest.sort = this.sortField
+    this.pageRequest.direction = this.sortDirection as SortDirection
 
     if (status) {
       this.pageRequest.status = status;
       this.loadStatus();
     } else if (search) {
-      console.log("SIIN")
       this.loadSearch();
     } else {
       this.loadBooks();
     }
-  }
 
+  }
 
 
   addToFavorites(book: Book): void {
