@@ -28,10 +28,11 @@ Uses dummy user `John Doe`
 
 ### Impressions 
 
-```
+
 Since it was my first project using Angular and Spring boot or Java at all, then at first everything was quite difficult. 
-Last thing i implemented was sorting which turned out to be much more difficult than i imagined at first. Implementing search on the other hand was much easier, at first it was kind of one of the first things i tried but wasn't able to finish, came back later to it and it wasn't too bad at all
-```
+Last thing I implemented was sorting which turned out to be much more difficult than i imagined at first. Implementing search on the other hand was much easier, at first it was kind of one of the first things i tried but wasn't able to finish, came back later to it and it wasn't too bad at all
+
+
 ----------------------------------------------------------------------------
 ---
 
