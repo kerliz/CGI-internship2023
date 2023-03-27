@@ -20,4 +20,5 @@ export interface PageRequest {
   sort?: string;
   status?: string;
   direction?: SortDirection;
+  searchValue?: string;
 }

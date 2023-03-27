@@ -30,7 +30,8 @@ export class BooksListComponent implements OnInit {
 
   sortField = 'id';
   sortDirection = 'asc'
-  pageRequest: PageRequest = {pageIndex: this.page, pageSize: this.tablesSize, status: this.value, direction: this.sortDirection as SortDirection, sort: this.sortField};
+  searchValue:  string = ''
+  pageRequest: PageRequest = {pageIndex: this.page, pageSize: this.tablesSize, status: this.value, direction: this.sortDirection as SortDirection, sort: this.sortField, searchValue: this.searchValue};
 
   searchTerm: string;
   selectedStatus: BookStatus;
@@ -59,8 +60,10 @@ export class BooksListComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.searchTerm = params['value']
 
-      const search = params['value']
 
+      const search = params['value']
+      this.searchValue = search
+      console.log("^^^",this.searchValue)
       const status = params['status'];
       if (status) {
         this.selectedStatus = status as BookStatus;
@@ -85,10 +88,9 @@ export class BooksListComponent implements OnInit {
     //this.firstSort = this.booksDataSource
 
     this.firstSort.sortChange.subscribe(() => {
-      console.log("DFFFFae")
       //this.pageRequest.direction = this.sort.direction as SortDirection;
      // this.pageRequest.sort = this.sort.active;
-    //  this.loadBooks();
+      this.loadBooks();
     });
   }
 
@@ -106,7 +108,6 @@ export class BooksListComponent implements OnInit {
       direction: this.sortDirection === 'asc' ? 'asc' : 'desc'
     };
     if (this.sortField === 'year') {
-      console.log("AAAAAAGS")
       this.pageRequest.sort = 'year';
     }
     this.loadBooks();
@@ -133,12 +134,16 @@ export class BooksListComponent implements OnInit {
 
 
 
-  loadSearch():void {
-
-    this.books$ = this.bookService.searchBooks(this.searchTerm)
+  loadSearch() {
+    this.pageRequest.searchValue = this.searchValue
+    this.books$ = this.bookService.searchBooks(this.pageRequest)
+    console.log(this.pageRequest)
     this.books$.subscribe(books => {
+
       this.booksDataSource.data = books.content;
       this.booksDataSource.sort = this.firstSort;
+      console.log(books)
+
     });
   }
 
@@ -150,12 +155,13 @@ export class BooksListComponent implements OnInit {
     this.pageRequest.pageSize = this.tablesSize;
     const status = this.selectedStatus;
     const search = this.searchTerm;
+    console.log("REGQUER", this.pageRequest)
 
     if (status) {
       this.pageRequest.status = status;
       this.loadStatus();
     } else if (search) {
-     // this.pageRequest.searchTerm = search;
+      console.log("SIIN")
       this.loadSearch();
     } else {
       this.loadBooks();

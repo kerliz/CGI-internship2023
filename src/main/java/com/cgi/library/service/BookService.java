@@ -22,24 +22,7 @@ public class BookService {
 
     @Autowired
     private BookRepository bookRepository;
-/*
-    public Page<CheckOutDTO> getCheckOuts(Pageable pageable, Optional<String> sort) {
-        ModelMapper modelMapper = ModelMapperFactory.getMapper();
 
-        Sort.Direction direction = Sort.Direction.ASC;
-        String sortBy = "id"; // default sort field
-
-        if (sort.isPresent()) {
-            String[] sortParams = sort.get().split(",");
-            sortBy = sortParams[0];
-            if (sortParams.length > 1 && sortParams[1].equalsIgnoreCase("desc")) {
-                direction = Sort.Direction.DESC;
-            }
-        }
-        Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(direction, sortBy));
-        return checkOutRepository.findAll(sortedPageable).map(checkOut -> modelMapper.map(checkOut, CheckOutDTO.class));
-    }
- */
     public Page<BookDTO> getBooks(Pageable pageable, Optional<String> sort) {
         ModelMapper modelMapper = ModelMapperFactory.getMapper();
 
@@ -66,6 +49,8 @@ System.out.println(sort);
 
     public Page<BookDTO> searchBooks(String search, Pageable pageable) {
         ModelMapper modelMapper = ModelMapperFactory.getMapper();
+        System.out.println(search);
+        System.out.println(pageable);
         return bookRepository.searchBooks(search.toLowerCase(), pageable).map(book -> modelMapper.map(book, BookDTO.class));
     }
 
