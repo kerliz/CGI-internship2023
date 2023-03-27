@@ -30,8 +30,11 @@ Uses dummy user `John Doe`
 
 
 Since it was my first project using Angular and Spring boot or Java at all, then at first everything was quite difficult. 
-Last thing I implemented was sorting which turned out to be much more difficult than i imagined at first. Implementing search on the other hand was much easier, at first it was kind of one of the first things i tried but wasn't able to finish, came back later to it and it wasn't too bad at all
+Last thing I implemented was sorting which turned out to be much more difficult than i imagined at first. Implementing search on the other hand was much easier, at first it was kind of one of the first things i tried but wasn't able to finish, came back later to it and it wasn't too bad at all.
 
+Eventually I watched a lot of youtube videos and used some code snippets or ideas from there but at first it was too overwhelming to document what exactly I used from where since i didn't get everything to work
+<br>
+[This](https://www.youtube.com/watch?v=JNxWZXOsU0w&ab_channel=GetArrays) was the video that gave me the most base for my code
 
 ----------------------------------------------------------------------------
 ---
