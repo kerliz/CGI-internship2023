@@ -44,10 +44,10 @@ export class CheckoutsListComponent implements OnInit {
     const sortDirection = this.sortField === sortField ? (this.sortDirection === 'asc' ? 'desc' : 'asc') : 'asc';
     this.sortField = sortField;
     this.sortDirection = sortDirection as SortDirection;
-    console.log(sortDirection)
-    console.log(this.sortField)
+    this.page = 0;
+
     this.pageRequest = {
-      pageIndex: this.page - 1,
+      pageIndex: this.page,
       pageSize: this.tablesSize,
       sort: this.sortField,
       direction: this.sortDirection === 'asc' ? 'asc' : 'desc'

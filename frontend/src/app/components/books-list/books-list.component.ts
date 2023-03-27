@@ -82,6 +82,7 @@ export class BooksListComponent implements OnInit {
     this.sortField = sortField;
     this.sortDirection = sortDirection as SortDirection;
     this.checkRoute()
+    this.page = 0;
 
     this.pageRequest = {
       pageIndex: this.page,
