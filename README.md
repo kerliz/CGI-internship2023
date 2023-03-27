@@ -1,4 +1,6 @@
 
+
+
 ## Added functionalities
 Uses dummy user `John Doe`
 
@@ -29,12 +31,16 @@ Uses dummy user `John Doe`
 ### Impressions 
 
 
-Since it was my first project using Angular and Spring boot or Java at all, then at first everything was quite difficult. 
-Last thing I implemented was sorting which turned out to be much more difficult than i imagined at first. Implementing search on the other hand was much easier, at first it was kind of one of the first things i tried but wasn't able to finish, came back later to it and it wasn't too bad at all.
+Since it was my first project using Angular and Spring boot or Java at all, then at first everything was quite difficult.
+Eventually the most difficult thing turned out to be sorting which I implemented in the end thinking this is going to be the easiest. <br>
+Implementing search on the other hand was much easier. It was one of the first things I wanted to work on, but couldn't. After some time coming back to it, it turned out to be one of the easiest things.
+
 
 Eventually I watched a lot of youtube videos and used some code snippets or ideas from there but at first it was too overwhelming to document what exactly I used from where since i didn't get everything to work
 <br>
-[This](https://www.youtube.com/watch?v=JNxWZXOsU0w&ab_channel=GetArrays) was the video that gave me the most base for my code
+[This](https://www.youtube.com/watch?v=JNxWZXOsU0w&ab_channel=GetArrays) was the video that gave me the most base for my code <br>
+
+Overall I enjoyed working on this project, wish i had more time. Since I'm having specialisation sprint at the same I wasn't able to dedicate as much time I would have liked
 
 ----------------------------------------------------------------------------
 ---
